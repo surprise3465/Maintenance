@@ -1,2 +1,0 @@
-# WPFDemo
-WPF Study
