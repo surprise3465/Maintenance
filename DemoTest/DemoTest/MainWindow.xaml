@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoTest"
+        xmlns:src="clr-namespace:DemoTest"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1024">
-    <Grid>
-        
-    </Grid>
+        Title="DempTest" Height="720" Width="1280">
+    <TabControl x:Name="tabControl" Margin="0,56,2,0" Height="634" VerticalAlignment="Top">
+        <TabItem Header="维护模式" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="100" >
+          
+        </TabItem>
+        <TabItem Header="更新模式" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="100">
+        </TabItem>
+
+    </TabControl>
 </Window>

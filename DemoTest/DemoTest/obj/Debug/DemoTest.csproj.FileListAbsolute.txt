@@ -1,1 +1,0 @@
-E:\workspace\GitWorkspace\WPFDemo\DemoTest\DemoTest\bin\Debug\DemoTest.exe.config
