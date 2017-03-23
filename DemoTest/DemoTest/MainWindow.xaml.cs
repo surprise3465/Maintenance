@@ -20,9 +20,16 @@ namespace DemoTest
     /// </summary>
     public partial class MainWindow : Window
     {
+        private String ipaddr = "";
         public MainWindow()
         {
             InitializeComponent();
+            SetIpWin window1 = new SetIpWin();
+            if(window1.ShowDialog() == true)
+            {
+                ipaddr = window1.ipaddr;
+                return;
+            }
         }
     }
 }

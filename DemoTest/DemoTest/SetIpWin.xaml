@@ -5,9 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoTest"
         mc:Ignorable="d"
-        Title="SetIpWin" Height="210.924" Width="440.336">
-    <Grid>
-        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Height="181" Width="432"/>
+        Title="SetIpWin" Height="210" Width="620">
 
-    </Grid>
+    <DataGrid x:Name="dataGridView" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionChanged="dataGridView_SelectionChanged">
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Select" Width="60"  Binding="{Binding SelectNum}" IsReadOnly="True"/>
+            <DataGridTextColumn Header="IP Addr" Width="100" Binding="{Binding IPAddr}" IsReadOnly="True"/>
+            <DataGridTextColumn Header="MAC Addr" Width="100" Binding="{Binding MACAddr}" IsReadOnly="True"/>
+            <DataGridTextColumn Header="Name" Width="350" Binding="{Binding AdapterName}" IsReadOnly="True"/>
+        </DataGrid.Columns>
+    </DataGrid>
+
+
 </Window>
+
