@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="SetIpWin" Height="210" Width="620">
 
-    <DataGrid x:Name="dataGridView" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionChanged="dataGridView_SelectionChanged">
+    <DataGrid x:Name="dataGridView" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionChanged="dataGridView_SelectionChanged" RowHeight="40">
         <DataGrid.Columns>
             <DataGridTextColumn Header="Select" Width="60"  Binding="{Binding SelectNum}" IsReadOnly="True"/>
             <DataGridTextColumn Header="IP Addr" Width="100" Binding="{Binding IPAddr}" IsReadOnly="True"/>
