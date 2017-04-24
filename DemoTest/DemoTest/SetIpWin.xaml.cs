@@ -54,7 +54,7 @@ namespace DemoTest
 
         private void dataGridView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            var a = this.dataGridView.SelectedItem;
+            var a = dataGridView.SelectedItem;
             var b = (m_Adapter)a;
             ipaddr = b.IPAddr;
             DialogResult = true;
