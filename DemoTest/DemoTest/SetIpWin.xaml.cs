@@ -52,7 +52,7 @@ namespace DemoTest
             AdapterNum = 0;
         }
 
-        private void dataGridView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             var a = dataGridView.SelectedItem;
             var b = (m_Adapter)a;
