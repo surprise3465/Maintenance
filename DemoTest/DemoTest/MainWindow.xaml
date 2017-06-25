@@ -10,52 +10,60 @@
     Width="1280"
     Height="720"
     mc:Ignorable="d">
-    <StackPanel Margin="0,0,2,-1">
-        <ToolBar x:Name="toolBar" Height="35" />
-        <StackPanel Height="620" Orientation="Horizontal">
-            <Grid Height="620" Margin="0,0,1150,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0*" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Label
-                    x:Name="label"
-                    Grid.ColumnSpan="2"
-                    Height="43"
-                    Margin="0,120,0,457"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Content="  Maintenance"
-                    RenderTransformOrigin="0.55,-0.577" />
-                <Image
-                    x:Name="image1"
-                    Grid.ColumnSpan="2"
-                    Height="120"
-                    VerticalAlignment="Top" />
-                <Label
-                    x:Name="label1"
-                    Grid.ColumnSpan="2"
-                    Margin="0,288"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Content="Update"
-                    RenderTransformOrigin="0.625,1.115" />
-                <Image
-                    x:Name="image"
-                    Grid.ColumnSpan="2"
-                    Height="131"
-                    Margin="60,424,60,65"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    RenderTransformOrigin="0.5,1.09" />
-                <Image
-                    x:Name="image2"
-                    Grid.ColumnSpan="2"
-                    Height="120"
-                    Margin="0,168,0,0"
-                    VerticalAlignment="Top" />
-            </Grid>
-        </StackPanel>
-        <StatusBar Height="35" />
-    </StackPanel>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition />
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ToolBar x:Name="toolBar" Grid.Row="0" Grid.ColumnSpan="2"/>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Label
+                x:Name="label"
+                Margin="0,120,0,457"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Content="  Maintenance"
+                RenderTransformOrigin="0.55,-0.577" />
+            <Image
+                x:Name="image1"
+                Height="120"
+                VerticalAlignment="Top" />
+            <Label
+                x:Name="label1"
+                Margin="0,288"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Content="Update"
+                RenderTransformOrigin="0.625,1.115" />
+            <Image
+                x:Name="image"
+                Height="131"
+                Margin="116,424,4,65"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                RenderTransformOrigin="0.5,1.09" Width="0" />
+            <Image
+                x:Name="image2"
+                Height="120"
+                Margin="0,168,0,0"
+                VerticalAlignment="Top" />
+        </Grid>
+        <TabControl x:Name="tabControl" Grid.Row="1"  Grid.Column="1">
+            <TabControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="TabItem.Visibility" Value="Collapsed"/>
+                </Style>
+            </TabControl.ItemContainerStyle>
+            <TabItem Header="Maintenance">
+            </TabItem>
+            <TabItem Header="Update">
+            </TabItem>
+        </TabControl>
+        <StatusBar x:Name="statusBar" Grid.Row="2" Grid.ColumnSpan="2"/>
+    </Grid>
 </Window>
