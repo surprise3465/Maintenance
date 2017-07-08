@@ -6,64 +6,79 @@
     xmlns:local="clr-namespace:DemoTest"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:src="clr-namespace:DemoTest"
-    Title="DempTest"
+    Title="SSA Maintenance Tool"
     Width="1280"
     Height="720"
+    Icon="DLSSA.ico"
     mc:Ignorable="d">
-    <Grid >
+    <Grid Background="Black">
         <Grid.RowDefinitions>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="35" />
             <RowDefinition />
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="35" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120"/>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <ToolBar x:Name="toolBar" Grid.Row="0" Grid.ColumnSpan="2"/>
-        <Grid Grid.Row="1" Grid.Column="0">
-            <Label
-                x:Name="label"
-                Margin="0,120,0,457"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                Content="  Maintenance"
-                RenderTransformOrigin="0.55,-0.577" />
-            <Image
-                x:Name="image1"
-                Height="120"
-                VerticalAlignment="Top" />
-            <Label
-                x:Name="label1"
-                Margin="0,288"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                Content="Update"
-                RenderTransformOrigin="0.625,1.115" />
-            <Image
-                x:Name="image"
-                Height="131"
-                Margin="116,424,4,65"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                RenderTransformOrigin="0.5,1.09" Width="0" />
-            <Image
-                x:Name="image2"
-                Height="120"
-                Margin="0,168,0,0"
-                VerticalAlignment="Top" />
-        </Grid>
-        <TabControl x:Name="tabControl" Grid.Row="1"  Grid.Column="1">
-            <TabControl.ItemContainerStyle>
-                <Style>
-                    <Setter Property="TabItem.Visibility" Value="Collapsed"/>
-                </Style>
-            </TabControl.ItemContainerStyle>
-            <TabItem Header="Maintenance">
+        <ToolBar
+            x:Name="toolBar"
+            Grid.Row="0"
+            Grid.ColumnSpan="2" />
+        <TabControl
+            x:Name="tabControl"
+            Grid.Row="1"
+            TabStripPlacement="Left">
+            <TabItem
+                x:Name="tabMaint"
+                Width="80"
+                Height="80"
+                Margin="0,0,-3,0"
+                Header="Maintenance">
+                <TabItem.Background>
+                    <ImageBrush ImageSource="res/config.png" />
+                </TabItem.Background>
+                <DataGrid x:Name="MaintGrid" Margin="0,0,0,138" />
             </TabItem>
-            <TabItem Header="Update">
+            <TabItem
+                x:Name="tabUpdate"
+                Width="80"
+                Height="80"
+                Margin="0,0,-3,0"
+                Header="Update">
+                <TabItem.Background>
+                    <ImageBrush ImageSource="res/update.png" />
+                </TabItem.Background>
+                <DataGrid x:Name="UpdateGrid" Margin="0,0,0,269" />
             </TabItem>
         </TabControl>
-        <StatusBar x:Name="statusBar" Grid.Row="2" Grid.ColumnSpan="2"/>
+        <StatusBar x:Name="statusBar" Grid.Row="2">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <TextBlock>Ready</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="1">
+                <ProgressBar
+                    Width="80"
+                    Height="18"
+                    Value="30" />
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="2">
+                <TextBlock>Set</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="3">
+                <TextBlock x:Name="datatime" />
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>
