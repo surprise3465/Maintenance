@@ -27,9 +27,8 @@
             TabStripPlacement="Left">
             <TabItem
                 x:Name="tabMaint"
-                Width="80"
                 Height="80"
-                Margin="0,0,-3,0"
+                Margin="0,0,-2,0"
                 Header="Maintenance">
                 <TabItem.Background>
                     <ImageBrush ImageSource="res/config.png" />
@@ -38,9 +37,8 @@
             </TabItem>
             <TabItem
                 x:Name="tabUpdate"
-                Width="80"
                 Height="80"
-                Margin="0,0,-3,0"
+                Margin="0,0,-2,0"
                 Header="Update">
                 <TabItem.Background>
                     <ImageBrush ImageSource="res/update.png" />
