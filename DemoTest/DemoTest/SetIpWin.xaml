@@ -9,7 +9,7 @@
     Width="650"
     Height="210"
     ResizeMode="NoResize"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Icon="res/DLSSA.ico">
 
     <Window.Resources>
 

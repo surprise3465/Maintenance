@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Threading;
 using wrapper;
+using TheExcelEdit;
+
 namespace DemoTest
 {
     /// <summary>
@@ -10,6 +12,7 @@ namespace DemoTest
     public partial class MainWindow : Window
     {
         ManagedClass ssadevdll = new ManagedClass();
+        ExcelEdit systemtable = new ExcelEdit();
         private String ipaddr = "";
         private DispatcherTimer timer1 = new DispatcherTimer();
         public MainWindow()
@@ -22,6 +25,12 @@ namespace DemoTest
                 ssadevdll.SSADevDllClose();
             }
             set_clock();
+            ReadProjectXML();
+        }
+
+        private void ReadProjectXML()
+        {
+
         }
 
         private void set_clock()
