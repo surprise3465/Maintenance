@@ -18,26 +18,53 @@
             <RowDefinition />
             <RowDefinition Height="35" />
         </Grid.RowDefinitions>
-        <Menu x:Name="menu"
-              Grid.Row="0"
-              Background="Black" FontWeight="Bold" Foreground="White">
+        <Menu
+            x:Name="menu"
+            Grid.Row="0"
+            Background="Black"
+            FontWeight="Bold"
+            Foreground="White">
             <MenuItem Header="_File">
-                <MenuItem Header="_Open" Width="200" Foreground="Black"/>
-                <MenuItem Header="_Save" Width="200" Foreground="Black" Command="Save"/>
-                <Separator Width="145" Foreground="Black"/>
-                <MenuItem Header="_Close" Width="200" Foreground="Black" Command="Close"/>
+                <MenuItem
+                    Width="200"
+                    Foreground="Black"
+                    Header="_Open" />
+                <MenuItem
+                    Width="200"
+                    Command="Save"
+                    Foreground="Black"
+                    Header="_Save" />
+                <Separator Width="145" Foreground="Black" />
+                <MenuItem
+                    Width="200"
+                    Command="Close"
+                    Foreground="Black"
+                    Header="_Close" />
             </MenuItem>
-            <MenuItem Header="_Tools" Background="Black" Foreground="White">
-                <MenuItem Header="_Options" HorizontalAlignment="Left" Width="200" Foreground="Black"/> <!--Command="local:GameOptions.OptionsCommand"--> 
+            <MenuItem
+                Background="Black"
+                Foreground="White"
+                Header="_Tools">
+                <MenuItem
+                    Width="200"
+                    HorizontalAlignment="Left"
+                    Foreground="Black"
+                    Header="_Options" /> 
+                <!--  Command="local:GameOptions.OptionsCommand"  -->
             </MenuItem>
-            <MenuItem Header="Help" Background="Black" Foreground="White">
-                <MenuItem Header="_About" HorizontalAlignment="Left" Width="145" Foreground="Black" /> <!--Command="local:GameViewModel.ShowAboutCommand"-->
+            <MenuItem
+                Background="Black"
+                Foreground="White"
+                Header="Help">
+                <MenuItem
+                    Width="145"
+                    HorizontalAlignment="Left"
+                    Foreground="Black"
+                    Header="_About" /> 
+                <!--  Command="local:GameViewModel.ShowAboutCommand"  -->
             </MenuItem>
         </Menu>
-        <ToolBar
-            x:Name="toolBar"
-            Grid.Row="1">
-        </ToolBar>
+        <ToolBar x:Name="toolBar" Grid.Row="1" />
         <TabControl
             x:Name="tabControl"
             Grid.Row="2"
