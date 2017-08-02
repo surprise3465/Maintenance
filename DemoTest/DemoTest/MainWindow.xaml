@@ -49,7 +49,7 @@
                     Width="200"
                     HorizontalAlignment="Left"
                     Foreground="Black"
-                    Header="_Options" /> 
+                    Header="_Options" />
                 <!--  Command="local:GameOptions.OptionsCommand"  -->
             </MenuItem>
             <MenuItem
@@ -60,7 +60,7 @@
                     Width="145"
                     HorizontalAlignment="Left"
                     Foreground="Black"
-                    Header="_About" /> 
+                    Header="_About" />
                 <!--  Command="local:GameViewModel.ShowAboutCommand"  -->
             </MenuItem>
         </Menu>
@@ -73,16 +73,32 @@
                 x:Name="tabMaint"
                 Height="80"
                 Margin="0,0,-2,0"
+                FontWeight="Bold"
                 Header="Maintenance">
                 <TabItem.Background>
                     <ImageBrush ImageSource="res/config.png" />
                 </TabItem.Background>
-                <DataGrid x:Name="MaintGrid" Margin="0,0,0,138" />
+                <Canvas>
+                    <DataGrid
+                        x:Name="MaintGrid"
+                        Width="1168"
+                        Height="360"
+                        RenderTransformOrigin="0.5,0.5" />
+                    <Button
+                        x:Name="MaintGetAll"
+                        Canvas.Left="31"
+                        Canvas.Top="385"
+                        Width="100"
+                        Height="40"
+                        Margin="0"
+                        HorizontalAlignment="Left" />
+                </Canvas>
             </TabItem>
             <TabItem
                 x:Name="tabUpdate"
                 Height="80"
                 Margin="0,0,-2,0"
+                FontWeight="Bold"
                 Header="Update">
                 <TabItem.Background>
                     <ImageBrush ImageSource="res/update.png" />
