@@ -50,7 +50,6 @@
                     HorizontalAlignment="Left"
                     Foreground="Black"
                     Header="_Options" />
-                <!--  Command="local:GameOptions.OptionsCommand"  -->
             </MenuItem>
             <MenuItem
                 Background="Black"
@@ -61,7 +60,6 @@
                     HorizontalAlignment="Left"
                     Foreground="Black"
                     Header="_About" />
-                <!--  Command="local:GameViewModel.ShowAboutCommand"  -->
             </MenuItem>
         </Menu>
         <ToolBar x:Name="toolBar" Grid.Row="1" />

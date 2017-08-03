@@ -10,15 +10,15 @@ namespace DemoTest
     /// </summary>
     public partial class SetIpWin : Window
     {
-        public String ipaddr = "";
+        public string ipaddr = "";
         int AdapterNum = 0;
 
         public struct m_Adapter
         {
             public int SelectNum{ get; set; }
-            public String IPAddr{ get; set; }
-            public String MACAddr{ get; set; }
-            public String AdapterName{ get; set; }
+            public string IPAddr { get; set; }
+            public string MACAddr { get; set; }
+            public string AdapterName { get; set; }
         }
 
         List<m_Adapter> service = new List<m_Adapter>();

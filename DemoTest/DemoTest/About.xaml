@@ -78,7 +78,7 @@
                 Padding="20,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                TextWrapping="Wrap"><Run Text="Ma" /><Run Text="i" /><Run Text="ntenance Toolset " /><Run Text="is " /><Run Text="developed for " /><Run Text="the " /><Run Text="devices of " /><Run Text="Dalian " /><Run Text="SeaSky " /><Run Text="Automation" /><Run Text=" " /><Run Text="co., LTD. You can visit http://www.dlssa.com/" /><Run Text=" " /><Run Text="for further information" /></TextBlock>
+                TextWrapping="Wrap"><Run Text="Ma"/><Run Text="i"/><Run Text="ntenance Toolset "/><Run Text="is "/><Run Text="developed for "/><Run Text="the "/><Run Text="devices of "/><Run Text="Dalian "/><Run Text="SeaSky "/><Run Text="Automation"/><Run Text=" "/><Run Text="co., LTD. You can visit http://www.dlssa.com/"/><Run Text=" "/><Run Text="for further information"/><Run Text="."/></TextBlock>
         </StackPanel>
     </Grid>
 </Window>
