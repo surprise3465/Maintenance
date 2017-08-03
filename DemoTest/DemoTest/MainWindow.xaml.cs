@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Threading;
 using wrapper;
 using TheExcelEdit;
+using System.Collections.Generic;
 
 namespace DemoTest
 {
@@ -13,34 +14,54 @@ namespace DemoTest
     {
         ManagedClass ssadevdll = new ManagedClass();
         ExcelEdit systemtable = new ExcelEdit();
-        private String ipaddr = "";
+
+        private string ipaddr_string = "";
+        private sbyte[] ipaddr_inbyte = new sbyte[256];
         private DispatcherTimer timer1 = new DispatcherTimer();
+
         public MainWindow()
         {
             InitializeComponent();
+
             SetIpWin window = new SetIpWin();
-            if(window.ShowDialog() == true)
+            if (window.ShowDialog() == true)
             {
-                ipaddr = window.ipaddr;
-                ssadevdll.SSADevDllClose();
+                ipaddr_string = window.ipaddr;
+                int i = 0;
+                foreach (var s in ipaddr_string)
+                {
+                    ipaddr_inbyte[156 + i] = (Convert.ToSByte(s));
+                    i++;
+                }
+                ipaddr_inbyte[172] = 1;
             }
-            set_clock();
+            else
+            {
+                this.Close();
+            }
+            
             ReadProjectXML();
+            SetStatusBarclock();
         }
 
         private void ReadProjectXML()
         {
 
+            InitSocket();
         }
 
-        private void set_clock()
+        private void InitSocket()
+        {
+            //ssadevdll.SSADevDllInit();
+        }
+        private void SetStatusBarclock()
         {
             timer1.Interval = TimeSpan.FromSeconds(1);
-            timer1.Tick += timer1_Tick;
+            timer1.Tick += StatusTimerTick;
             timer1.Start();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void StatusTimerTick(object sender, EventArgs e)
         {
             int utchour = DateTime.UtcNow.Hour;
             int currhour = DateTime.Now.Hour;
