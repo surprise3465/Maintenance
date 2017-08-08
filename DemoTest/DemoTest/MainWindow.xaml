@@ -9,14 +9,17 @@
     Title="SSA Maintenance Tool"
     Width="1280"
     Height="720"
+    BorderBrush="Black"
+    BorderThickness="1"
     Icon="DLSSA.ico"
+    WindowStyle="ThreeDBorderWindow"
     mc:Ignorable="d">
     <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
             <RowDefinition Height="35" />
             <RowDefinition />
-            <RowDefinition Height="35" />
+            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <Menu
             x:Name="menu"
@@ -62,7 +65,53 @@
                     Header="_About" />
             </MenuItem>
         </Menu>
-        <ToolBar x:Name="toolBar" Grid.Row="1" />
+        <ToolBar x:Name="toolBar" Grid.Row="1">
+            <Canvas>
+                <Label
+                    x:Name="label"
+                    Canvas.Left="90"
+                    Canvas.Top="2"
+                    Width="95"
+                    Height="26"
+                    HorizontalContentAlignment="Right"
+                    VerticalContentAlignment="Center"
+                    Content="Select Project:"
+                    FontWeight="Bold" />
+                <ComboBox
+                    Canvas.Left="189"
+                    Canvas.Top="2"
+                    Width="100"
+                    Height="26"
+                    HorizontalContentAlignment="Left" />
+                <Label
+                    x:Name="label2"
+                    Canvas.Left="312"
+                    Canvas.Top="2"
+                    Width="90"
+                    Height="26"
+                    HorizontalContentAlignment="Right"
+                    VerticalContentAlignment="Center"
+                    Content="ProjectXML"
+                    FontWeight="Bold" />
+                <RichTextBox
+                    x:Name="richtextbox"
+                    Canvas.Left="404"
+                    Canvas.Top="2"
+                    Width="400"
+                    Height="26"
+                    HorizontalContentAlignment="Left"
+                    BorderBrush="Black"
+                    BorderThickness="1" />
+                <Button
+                    x:Name="browsebutton"
+                    Canvas.Left="810"
+                    Canvas.Top="2"
+                    Width="65"
+                    Height="26"
+                    Content="Browse"
+                    FontWeight="Bold" />
+            </Canvas>
+        </ToolBar>
         <TabControl
             x:Name="tabControl"
             Grid.Row="2"
@@ -76,21 +125,58 @@
                 <TabItem.Background>
                     <ImageBrush ImageSource="res/config.png" />
                 </TabItem.Background>
-                <Canvas>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="255*" />
+                        <RowDefinition Height="338*" />
+                    </Grid.RowDefinitions>
                     <DataGrid
                         x:Name="MaintGrid"
-                        Width="1168"
-                        Height="360"
+                        Grid.RowSpan="2"
+                        Margin="0,0,0,200"
                         RenderTransformOrigin="0.5,0.5" />
-                    <Button
-                        x:Name="MaintGetAll"
-                        Canvas.Left="31"
-                        Canvas.Top="385"
-                        Width="100"
-                        Height="40"
-                        Margin="0"
-                        HorizontalAlignment="Left" />
-                </Canvas>
+                    <Canvas
+                        Grid.Row="1"
+                        Height="200"
+                        VerticalAlignment="Bottom">
+                        <Button
+                            x:Name="MaintGetAll"
+                            Canvas.Left="316"
+                            Canvas.Top="28"
+                            Width="100"
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Content="Get All Device" />
+                        <Label
+                            x:Name="label1"
+                            Canvas.Left="61"
+                            Canvas.Top="29"
+                            Width="100"
+                            Height="30"
+                            Content="Selcect Device:" />
+                        <ComboBox
+                            Name="DevSelCom"
+                            Canvas.Left="166"
+                            Canvas.Top="29"
+                            Width="110"
+                            Height="28" />
+                        <Button
+                            x:Name="DevCount"
+                            Canvas.Left="316"
+                            Canvas.Top="75"
+                            Width="100"
+                            Height="34"
+                            Content="Dev Count" />
+                        <Button
+                            x:Name="ExportFile"
+                            Canvas.Left="166"
+                            Canvas.Top="75"
+                            Width="110"
+                            Height="34"
+                            Content="Export File" />
+                    </Canvas>
+                </Grid>
             </TabItem>
             <TabItem
                 x:Name="tabUpdate"
@@ -112,27 +198,21 @@
                             <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="3*" />
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
-            <StatusBarItem>
-                <TextBlock>Ready</TextBlock>
+            <StatusBarItem Grid.Column="0">
+                <TextBlock
+                    x:Name="textBlock"
+                    Text="Ready"
+                    TextWrapping="Wrap" />
             </StatusBarItem>
-            <StatusBarItem Grid.Column="1">
-                <ProgressBar
-                    Width="80"
-                    Height="18"
-                    Value="30" />
-            </StatusBarItem>
-            <StatusBarItem Grid.Column="2">
-                <TextBlock>Set</TextBlock>
-            </StatusBarItem>
-            <StatusBarItem Grid.Column="3">
+            <StatusBarItem Grid.Column="1" />
+            <StatusBarItem Grid.Column="2" HorizontalContentAlignment="Right">
                 <TextBlock x:Name="datatime" />
             </StatusBarItem>
         </StatusBar>
