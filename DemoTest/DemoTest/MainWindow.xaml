@@ -69,7 +69,6 @@
             <Canvas>
                 <Label
                     x:Name="label"
-                    Canvas.Left="90"
                     Canvas.Top="2"
                     Width="95"
                     Height="26"
@@ -78,14 +77,14 @@
                     Content="Select Project:"
                     FontWeight="Bold" />
                 <ComboBox
-                    Canvas.Left="189"
+                    Canvas.Left="99"
                     Canvas.Top="2"
                     Width="100"
                     Height="26"
                     HorizontalContentAlignment="Left" />
                 <Label
                     x:Name="label2"
-                    Canvas.Left="312"
+                    Canvas.Left="222"
                     Canvas.Top="2"
                     Width="90"
                     Height="26"
@@ -94,8 +93,8 @@
                     Content="ProjectXML"
                     FontWeight="Bold" />
                 <RichTextBox
-                    x:Name="richtextbox"
-                    Canvas.Left="404"
+                    x:Name="richTextBoxProject"
+                    Canvas.Left="314"
                     Canvas.Top="2"
                     Width="400"
                     Height="26"
@@ -104,7 +103,7 @@
                     BorderThickness="1" />
                 <Button
                     x:Name="browsebutton"
-                    Canvas.Left="810"
+                    Canvas.Left="720"
                     Canvas.Top="2"
                     Width="65"
                     Height="26"
@@ -127,54 +126,71 @@
                 </TabItem.Background>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="255*" />
-                        <RowDefinition Height="338*" />
+                        <RowDefinition Height="435*" />
+                        <RowDefinition Height="158*" />
                     </Grid.RowDefinitions>
-                    <DataGrid
-                        x:Name="MaintGrid"
-                        Grid.RowSpan="2"
-                        Margin="0,0,0,200"
-                        RenderTransformOrigin="0.5,0.5" />
+                    <DataGrid x:Name="MaintGrid" RenderTransformOrigin="0.5,0.5" />
                     <Canvas
                         Grid.Row="1"
-                        Height="200"
+                        Height="158"
                         VerticalAlignment="Bottom">
                         <Button
                             x:Name="MaintGetAll"
-                            Canvas.Left="316"
-                            Canvas.Top="28"
+                            Canvas.Left="286"
+                            Canvas.Top="13"
                             Width="100"
-                            Height="30"
+                            Height="34"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             Content="Get All Device" />
                         <Label
                             x:Name="label1"
-                            Canvas.Left="61"
-                            Canvas.Top="29"
+                            Canvas.Left="31"
+                            Canvas.Top="14"
                             Width="100"
                             Height="30"
-                            Content="Selcect Device:" />
+                            Content="Select Device:" />
                         <ComboBox
                             Name="DevSelCom"
-                            Canvas.Left="166"
-                            Canvas.Top="29"
+                            Canvas.Left="136"
+                            Canvas.Top="14"
                             Width="110"
                             Height="28" />
                         <Button
                             x:Name="DevCount"
-                            Canvas.Left="316"
-                            Canvas.Top="75"
+                            Canvas.Left="286"
+                            Canvas.Top="60"
                             Width="100"
                             Height="34"
                             Content="Dev Count" />
                         <Button
                             x:Name="ExportFile"
-                            Canvas.Left="166"
-                            Canvas.Top="75"
+                            Canvas.Left="136"
+                            Canvas.Top="60"
                             Width="110"
                             Height="34"
                             Content="Export File" />
+                        <Label
+                            x:Name="label3"
+                            Canvas.Left="21"
+                            Canvas.Top="112"
+                            Width="110"
+                            HorizontalContentAlignment="Right"
+                            Content="System Version" />
+                        <RichTextBox
+                            x:Name="richTextBoxSysver"
+                            Canvas.Left="136"
+                            Canvas.Top="112"
+                            Width="250"
+                            Height="28"
+                            BorderBrush="Black" />
+                        <Button
+                            x:Name="buttonSysver"
+                            Canvas.Left="406"
+                            Canvas.Top="112"
+                            Width="75"
+                            Height="26"
+                            Content="Browse" />
                     </Canvas>
                 </Grid>
             </TabItem>
@@ -189,6 +205,16 @@
                 </TabItem.Background>
                 <DataGrid x:Name="UpdateGrid" Margin="0,0,0,269" />
             </TabItem>
+            <RichTextBox
+                x:Name="richTextBox"
+                Width="100"
+                Height="100">
+                <FlowDocument>
+                    <Paragraph>
+                        <Run Text="RichTextBox" />
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
         </TabControl>
         <StatusBar x:Name="statusBar" Grid.Row="3">
             <StatusBar.ItemsPanel>
