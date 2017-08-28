@@ -118,7 +118,7 @@
             <TabItem
                 x:Name="tabMaint"
                 Height="80"
-                Margin="0,0,-2,0"
+                Margin="0,0,0,0"
                 FontWeight="Bold"
                 Header="Maintenance">
                 <TabItem.Background>
@@ -197,7 +197,7 @@
             <TabItem
                 x:Name="tabUpdate"
                 Height="80"
-                Margin="0,0,-2,0"
+                Margin="0,0,0,0"
                 FontWeight="Bold"
                 Header="Update">
                 <TabItem.Background>
@@ -205,16 +205,6 @@
                 </TabItem.Background>
                 <DataGrid x:Name="UpdateGrid" Margin="0,0,0,269" />
             </TabItem>
-            <RichTextBox
-                x:Name="richTextBox"
-                Width="100"
-                Height="100">
-                <FlowDocument>
-                    <Paragraph>
-                        <Run Text="RichTextBox" />
-                    </Paragraph>
-                </FlowDocument>
-            </RichTextBox>
         </TabControl>
         <StatusBar x:Name="statusBar" Grid.Row="3">
             <StatusBar.ItemsPanel>
