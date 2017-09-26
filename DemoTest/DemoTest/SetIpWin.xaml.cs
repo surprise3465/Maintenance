@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows;
+﻿using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Collections.Generic;
-namespace DemoTest
+using System.Windows;
+
+namespace MaintToolSet
 {
     /// <summary>
     /// SetIpWin.xaml 的交互逻辑

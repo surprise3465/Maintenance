@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Threading;
-using wrapper;
 using TheExcelEdit;
-using System.Collections.Generic;
+using wrapper;
 
-namespace DemoTest
+namespace MaintToolSet
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
