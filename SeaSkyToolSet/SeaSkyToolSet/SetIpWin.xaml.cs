@@ -3,7 +3,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Windows;
 
-namespace MaintToolSet
+namespace MaintenanceToolSet
 {
     /// <summary>
     /// SetIpWin.xaml 的交互逻辑

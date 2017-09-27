@@ -29,7 +29,6 @@ void CDevMsgParser::SetProtNew(WORD gen_prot,WORD pro_prot,WORD proID,WORD pro_p
 	m_ProtocolType=gen_prot;
 	m_ProjectProtocol=pro_prot;
 	m_ProjectNo=proID;
-
 	m_ProjectProtocolSw=pro_protsw;
 }
 

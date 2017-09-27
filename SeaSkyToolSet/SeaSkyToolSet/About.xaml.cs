@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace MaintToolSet
+namespace MaintenanceToolSet
 {
     /// <summary>
     /// About.xaml 的交互逻辑

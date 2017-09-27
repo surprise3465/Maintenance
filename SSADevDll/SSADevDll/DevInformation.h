@@ -14,7 +14,7 @@ public:
 	~CDevInformation();
 
 	BOOL DevInfoInit(WORD gen_prot,WORD pro_prot,WORD proID,int type,PSINFO_ADAPTER adaterinfo=NULL);//type=0:初始化sockDTLMaint，用于读版本工具；type=1:初始化sockDTLUpdate，用于更新工具；
-    BOOL DevInfoInitNew(WORD gen_prot,WORD pro_prot,WORD pro_protsw,WORD proID,int type,PSINFO_ADAPTER adaterinfo=NULL);
+    BOOL DevInfoInitNew(WORD gen_prot,WORD pro_prot,WORD pro_protsw,WORD proID,int type,char* adaterinfo= nullptr);
 
 	void SSADevDllClose();
 	void DevInfoClose();

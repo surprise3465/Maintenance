@@ -148,7 +148,7 @@ BOOL CDevInformation::DevInfoInit(WORD gen_prot,WORD pro_prot,WORD proID,int typ
 
 }
 
-BOOL CDevInformation::DevInfoInitNew(WORD gen_prot,WORD pro_prot,WORD pro_protsw,WORD proID,int type,PSINFO_ADAPTER adaterinfo)
+BOOL CDevInformation::DevInfoInitNew(WORD gen_prot,WORD pro_prot,WORD pro_protsw,WORD proID,int type,char* adaterinfo)
 {
 	m_Type=type;
 	WORD wVersionRequested; 
@@ -194,31 +194,15 @@ BOOL CDevInformation::DevInfoInitNew(WORD gen_prot,WORD pro_prot,WORD pro_protsw
 
 		localaddr.sin_family = AF_INET;
 		localaddr.sin_port = htons(UDP_SENDSRC);
-		if (adaterinfo==NULL)
+		if (adaterinfo== nullptr)
 		{
 			localaddr.sin_addr.s_addr = INADDR_ANY;
 		}
 		else
 		{
-			while(i<5)
-			{
-				if(adaterinfo->info_ip.note_ip[i].sign==1)
-				{
-					if(inet_addr(adaterinfo->info_ip.note_ip[i].szIPAddrStr)==inet_addr("193.166.1.10"))
-					{
-                       i++;
-					   continue;
-					}
-					else
-					{
-                       localaddr.sin_addr.s_addr = inet_addr(adaterinfo->info_ip.note_ip[i].szIPAddrStr);
-					   break;
-					}
-				}
-				i++;
-			}
-
+             localaddr.sin_addr.s_addr = inet_addr(adaterinfo);
 		}
+
 		
 
 		result = bind(sockDTLMaint, (struct sockaddr*)&localaddr, sizeof(localaddr));
@@ -228,7 +212,6 @@ BOOL CDevInformation::DevInfoInitNew(WORD gen_prot,WORD pro_prot,WORD pro_protsw
 			closesocket(sockDTLMaint);
 			WSACleanup(); 
 			return FALSE;
-
 		}
 
 		sockSW = socket(AF_INET, SOCK_DGRAM, 0);
@@ -249,30 +232,13 @@ BOOL CDevInformation::DevInfoInitNew(WORD gen_prot,WORD pro_prot,WORD pro_protsw
 
 		localaddr.sin_family = AF_INET;
 		localaddr.sin_port = htons(UDP_RECVDES);
-		if(adaterinfo==NULL)
+		if(adaterinfo== nullptr)
 		{
 			localaddr.sin_addr.s_addr = INADDR_ANY;
 		}
 		else
 		{
-			i=0;
-			while(i<5)
-			{
-				if(adaterinfo->info_ip.note_ip[i].sign==1)
-				{
-					if(inet_addr(adaterinfo->info_ip.note_ip[i].szIPAddrStr)==inet_addr("193.166.1.10"))
-					{
-						i++;
-						continue;
-					}
-					else
-					{
-						localaddr.sin_addr.s_addr = inet_addr(adaterinfo->info_ip.note_ip[i].szIPAddrStr);
-						break;
-					}
-				}
-				i++;
-			}
+			localaddr.sin_addr.s_addr = inet_addr(adaterinfo);
 		}
 		
 		result = bind(sockSW, (struct sockaddr*)&localaddr, sizeof(localaddr));
@@ -283,56 +249,7 @@ BOOL CDevInformation::DevInfoInitNew(WORD gen_prot,WORD pro_prot,WORD pro_protsw
 			closesocket(sockSW);
 			WSACleanup(); 
 			return FALSE;
-
-		}
-
-		if(adaterinfo->ipnum>=2)
-		{
-			socksecondip = socket(AF_INET, SOCK_DGRAM, 0);
-			if(socksecondip == SOCKET_ERROR) 
-			{
-				ssa_error_code=ERROR_SOCKET_CREATE_FAILED;
-				closesocket(sockDTLMaint);
-				WSACleanup(); 
-				return FALSE;
-			}
-
-			localaddr.sin_family = AF_INET;
-			localaddr.sin_port = htons(6666);
-			
-			i=0;
-			while(i<5)
-			{
-				if(adaterinfo->info_ip.note_ip[i].sign==1)
-				{
-					if(inet_addr(adaterinfo->info_ip.note_ip[i].szIPAddrStr)==inet_addr("193.166.1.10"))
-					{
-						localaddr.sin_addr.s_addr = inet_addr("193.166.1.10");
-						result = bind(socksecondip, (struct sockaddr*)&localaddr, sizeof(localaddr));
-						if(result == SOCKET_ERROR ) 
-						{
-							ssa_error_code=ERROR_SOCKET_BIND_FAILED;
-							closesocket(sockDTLMaint);
-							closesocket(sockSW);
-							closesocket(socksecondip);
-							WSACleanup(); 
-							return FALSE;
-
-						}
-						break;
-					}
-					else
-					{
-						i++;
-						continue;
-					}
-				}
-
-				i++;
-			}
-		
-		}
-		
+		}	
 	}
 	else if (m_Type==1)
 	{
@@ -359,27 +276,9 @@ BOOL CDevInformation::DevInfoInitNew(WORD gen_prot,WORD pro_prot,WORD pro_protsw
 		}
 		else
 		{
-			i=0;
-			while(i<5)
-			{
-				if(adaterinfo->info_ip.note_ip[i].sign==1)
-				{
-					if(inet_addr(adaterinfo->info_ip.note_ip[i].szIPAddrStr)==inet_addr("193.166.1.10"))
-					{
-						i++;
-						continue;
-					}
-					else
-					{
-						localaddr.sin_addr.s_addr = inet_addr(adaterinfo->info_ip.note_ip[i].szIPAddrStr);
-						break;
-					}
-				}
-				i++;
-			}
+			localaddr.sin_addr.s_addr = inet_addr(adaterinfo);
 		}
 		
-
 		result = bind(sockDTLUpdate, (struct sockaddr*)&localaddr, sizeof(localaddr));
 		if(result == SOCKET_ERROR ) 
 		{
@@ -387,7 +286,6 @@ BOOL CDevInformation::DevInfoInitNew(WORD gen_prot,WORD pro_prot,WORD pro_protsw
 			closesocket(sockDTLUpdate);
 			WSACleanup(); 
 			return FALSE;
-
 		}
 	}
 
@@ -439,11 +337,8 @@ void CDevInformation::DevInfoClose()
 	{
 		closesocket(sockDTLUpdate);
 	}
-	
-	
-	
+		
 	WSACleanup();
-
 }
 
 void CDevInformation::Dev368Close()

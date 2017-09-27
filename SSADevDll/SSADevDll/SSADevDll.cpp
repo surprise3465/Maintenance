@@ -33,7 +33,7 @@ int SSADevDll::SSADevDllInit(unsigned short gen_prot,unsigned short pro_prot,uns
 
 int SSADevDll:: SSADevDllInitNew(unsigned short gen_prot,unsigned short pro_prot,unsigned short pro_protsw,unsigned short proID,int type,char* adapterinfo /*=NULL*/)
 {
-	PSINFO_ADAPTER adapterinfotmp=(PSINFO_ADAPTER) adapterinfo;
+	//PSINFO_ADAPTER adapterinfotmp = (PSINFO_ADAPTER)adapterinfo;
 	int result;
 	//result=m_DevUpdate.DevUpdateInit(gen_prot,pro_prot,proID);
     result=m_DevUpdate.DevUpdateInitNew(gen_prot,pro_prot,pro_protsw,proID);
@@ -41,7 +41,7 @@ int SSADevDll:: SSADevDllInitNew(unsigned short gen_prot,unsigned short pro_prot
 	{
 		return result;
 	}
-	result=m_DevInfo.DevInfoInitNew(gen_prot,pro_prot,pro_protsw,proID,type,adapterinfotmp);
+	result=m_DevInfo.DevInfoInitNew(gen_prot,pro_prot,pro_protsw,proID,type, adapterinfo);
 	if (!result)
 	{
 		return result;

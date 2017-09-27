@@ -47,7 +47,7 @@ class SSADevDll
 {
 public:		
 	int SSADevDllInit(unsigned short gen_prot,unsigned short pro_prot,unsigned short proID,int type,char* adapterinfo=NULL);//type=0:初始化sockDTLMaint，用于读版本工具；type=1:初始化sockDTLUpdate，用于更新工具；
-	int SSADevDllInitNew(unsigned short gen_prot,unsigned short pro_prot,unsigned short pro_protsw,unsigned short proID,int type,char* adapterinfo=NULL);
+	static int SSADevDllInitNew(unsigned short gen_prot,unsigned short pro_prot,unsigned short pro_protsw,unsigned short proID,int type,char* adapterinfo=NULL);
 	void SSADevDllClose();
 
 
