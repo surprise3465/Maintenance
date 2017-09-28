@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="GB2312" ?>
-<ProjectInf>
+<ProjectInf Version = "1.0.0">
   <Item name="WHL11"     projectnum="0x47"  projectpro="0x11b" ></Item>
   <Item name="CTA7000"   projectnum="0x45"  projectpro="0x11b" ></Item>
   <Item name="LUCKNOW"   projectnum="0x44"  projectpro="0x11b" ></Item>  

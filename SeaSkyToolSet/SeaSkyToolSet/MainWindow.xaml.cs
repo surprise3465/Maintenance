@@ -7,6 +7,13 @@ using System.Xml;
 using Microsoft.Win32;
 using TheExcelEdit;
 using wrapper;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Net.Sockets;
+using System.Runtime.CompilerServices;
+using System.Windows.Data;
+using MaintenanceToolSet;
+using System.Runtime.InteropServices;
 
 namespace MaintenanceToolSet
 {
@@ -17,16 +24,56 @@ namespace MaintenanceToolSet
     {
         ManagedClass ssadevdll = new ManagedClass();
         ExcelEdit systemtable = new ExcelEdit();
-        private String path = AppDomain.CurrentDomain.BaseDirectory;
-        private List<ProjectInfo> ProjectInfoList = new List<ProjectInfo>();
+
+        private string path = AppDomain.CurrentDomain.BaseDirectory;
+        
+        public ViewModeProject viewModeProject = new ViewModeProject();
+
+        public class ViewModeProject: INotifyPropertyChanged
+        {
+            private ObservableCollection<ProjectInfo> ProjectInfoList = new ObservableCollection<ProjectInfo>();
+            public ProjectInfo CurrentProjectInfo = new ProjectInfo("All", 0x00, 0x11b);
+
+            public ProjectInfo CurrentProjectBinding
+            {
+                get { return CurrentProjectInfo; }
+                set
+                {
+                    if (CurrentProjectInfo != value)
+                    {
+                        CurrentProjectInfo = value;
+                        OnPropertyChanged("CurrentProjectBinding");
+                    }
+                }
+            }
+
+            public ObservableCollection<ProjectInfo> ProjectBindList
+            {
+                get{return ProjectInfoList;}
+                set
+                {
+                    if (this.ProjectInfoList != value)
+                    {
+                        this.ProjectInfoList = value;
+                        OnPropertyChanged("ProjectBindList");
+                    }
+                }
+            }
+            public event PropertyChangedEventHandler PropertyChanged;
+            private void OnPropertyChanged(string propertyName)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        
         private string ipaddr_string = "";
         private DispatcherTimer timer1 = new DispatcherTimer();
 
-        public class ProjectInfo
-        {
-            public string ProjectName { get; private set;}
-            public int ProjectNum { get; private set; }
-            public int Projectpro { get; private set; }
+        public class ProjectInfo 
+        {           
+            public string ProjectName { get; set; }
+            public int ProjectNum { get; set; }
+            public int Projectpro { get; set; }
 
             public ProjectInfo(string projectName, int projectNum, int projectpro)
             {
@@ -35,10 +82,12 @@ namespace MaintenanceToolSet
                 Projectpro = projectpro;
             }
         }
-
+        
         public MainWindow()
         {
             InitializeComponent();
+
+            ProjectSelCom.DataContext = viewModeProject;
 
             SetIpWin window = new SetIpWin();
             if (window.ShowDialog() == true)
@@ -47,21 +96,38 @@ namespace MaintenanceToolSet
             }
             else
             {
-                this.Close();
+                Close();
             }
-            
-            ReadProjectXml();
+            textBoxProject.Text = path + "Project_PIS_Config.xml";
+            LoadProjectXmlFile(textBoxProject.Text);
+            InitSocket();
             SetStatusBarclock();
-        }
-
-        private void ReadProjectXml()
-        {
-            //InitSocket(ipaddr_string);
         }
 
         private void InitSocket()
         {
-            //ssadevdll.SSADevDllInit(ipaddr_string);
+            
+            ssadevdll.SSADevDllClose();
+            try
+            {
+                unsafe
+                {
+                    IntPtr intPtrStr = (IntPtr) Marshal.StringToHGlobalAnsi(ipaddr_string);
+                    sbyte* sbyteStr = (sbyte*) intPtrStr;
+                    ssadevdll.SSADevDllInit(0x101, 0x11B, 0x101, 0xFFFF, 0, sbyteStr);
+                }
+            }
+            catch (SocketException ex)
+            {
+                if (ex.SocketErrorCode == SocketError.AddressAlreadyInUse)
+                {
+                    MessageBox.Show("The Port Has Been In Use. Please Close Other Applications And Restart This Application!");
+                }
+                else
+                {
+                    MessageBox.Show("Socket Initialize Failed! The Application Can't Work Normally!\r\nPlease Close Other Applications And Restart This Application! ");
+                }
+            }
         }
 
         private void SetStatusBarclock()
@@ -99,29 +165,33 @@ namespace MaintenanceToolSet
             if (true == dlg.ShowDialog())
             {
                 textBoxProject.Text = dlg.FileName;
-                LoadXmlFile(textBoxProject.Text);
+                LoadProjectXmlFile(textBoxProject.Text);
             }           
         }
 
-        private void LoadXmlFile(string fileName)
+        private void LoadProjectXmlFile(string fileName)
         {
             try
             {
                 XmlDocument doc = new XmlDocument();
                 doc.Load(fileName);
-                ProjectInfoList.Clear();
+                viewModeProject.ProjectBindList.Clear();
                 XmlNodeList list = doc.SelectNodes("/ProjectInf/Item");
                 foreach (XmlNode n in list)
                 {
-                    ProjectInfoList.Add(new ProjectInfo(n.Attributes["name"].Value, Convert.ToInt32(n.Attributes["projectnum"].Value,16), Convert.ToInt32(n.Attributes["projectpro"].Value, 16)));
+                    viewModeProject.ProjectBindList.Add(new MainWindow.ProjectInfo(n.Attributes["name"].Value, Convert.ToInt32(n.Attributes["projectnum"].Value,16), Convert.ToInt32(n.Attributes["projectpro"].Value, 16)));
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                return;
             }
         }
 
+        private void MenuItem_AboutClick(object sender, RoutedEventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
+        }
     }
 }
