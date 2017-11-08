@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Xml;
 using Microsoft.Win32;
 using TheExcelEdit;
-using wrapper;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
-using System.Windows.Data;
-using MaintenanceToolSet;
 using System.Runtime.InteropServices;
 
 namespace MaintenanceToolSet
@@ -22,7 +16,6 @@ namespace MaintenanceToolSet
     /// </summary>
     public partial class MainWindow : Window
     {
-        ManagedClass ssadevdll = new ManagedClass();
         ExcelEdit systemtable = new ExcelEdit();
 
         private string path = AppDomain.CurrentDomain.BaseDirectory;
@@ -52,13 +45,14 @@ namespace MaintenanceToolSet
                 get{return ProjectInfoList;}
                 set
                 {
-                    if (this.ProjectInfoList != value)
+                    if (ProjectInfoList != value)
                     {
-                        this.ProjectInfoList = value;
+                        ProjectInfoList = value;
                         OnPropertyChanged("ProjectBindList");
                     }
                 }
             }
+
             public event PropertyChangedEventHandler PropertyChanged;
             private void OnPropertyChanged(string propertyName)
             {
@@ -106,16 +100,9 @@ namespace MaintenanceToolSet
 
         private void InitSocket()
         {
-            
-            ssadevdll.SSADevDllClose();
             try
             {
-                unsafe
-                {
-                    IntPtr intPtrStr = (IntPtr) Marshal.StringToHGlobalAnsi(ipaddr_string);
-                    sbyte* sbyteStr = (sbyte*) intPtrStr;
-                    ssadevdll.SSADevDllInit(0x101, 0x11B, 0x101, 0xFFFF, 0, sbyteStr);
-                }
+               
             }
             catch (SocketException ex)
             {
