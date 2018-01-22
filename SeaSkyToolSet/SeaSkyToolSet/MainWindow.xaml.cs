@@ -1,13 +1,11 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Threading;
 using System.Xml;
 using Microsoft.Win32;
 using TheExcelEdit;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Net.Sockets;
-using System.Runtime.InteropServices;
 
 namespace MaintenanceToolSet
 {
@@ -17,7 +15,7 @@ namespace MaintenanceToolSet
     public partial class MainWindow : Window
     {
         ExcelEdit systemtable = new ExcelEdit();
-
+        SSADevManage devmanage = new SSADevManage();
         private string path = AppDomain.CurrentDomain.BaseDirectory;
         
         public ViewModeProject viewModeProject = new ViewModeProject();
@@ -66,10 +64,10 @@ namespace MaintenanceToolSet
         public class ProjectInfo 
         {           
             public string ProjectName { get; set; }
-            public int ProjectNum { get; set; }
-            public int Projectpro { get; set; }
+            public ushort ProjectNum { get; set; }
+            public ushort Projectpro { get; set; }
 
-            public ProjectInfo(string projectName, int projectNum, int projectpro)
+            public ProjectInfo(string projectName, ushort projectNum, ushort projectpro)
             {
                 ProjectName = projectName;
                 ProjectNum = projectNum;
@@ -94,27 +92,8 @@ namespace MaintenanceToolSet
             }
             textBoxProject.Text = path + "Project_PIS_Config.xml";
             LoadProjectXmlFile(textBoxProject.Text);
-            InitSocket();
+            devmanage.SSADevDllInit(0x101, viewModeProject.CurrentProjectInfo.Projectpro, viewModeProject.CurrentProjectInfo.ProjectNum, 0x101,ipaddr_string);
             SetStatusBarclock();
-        }
-
-        private void InitSocket()
-        {
-            try
-            {
-               
-            }
-            catch (SocketException ex)
-            {
-                if (ex.SocketErrorCode == SocketError.AddressAlreadyInUse)
-                {
-                    MessageBox.Show("The Port Has Been In Use. Please Close Other Applications And Restart This Application!");
-                }
-                else
-                {
-                    MessageBox.Show("Socket Initialize Failed! The Application Can't Work Normally!\r\nPlease Close Other Applications And Restart This Application! ");
-                }
-            }
         }
 
         private void SetStatusBarclock()
@@ -166,7 +145,7 @@ namespace MaintenanceToolSet
                 XmlNodeList list = doc.SelectNodes("/ProjectInf/Item");
                 foreach (XmlNode n in list)
                 {
-                    viewModeProject.ProjectBindList.Add(new MainWindow.ProjectInfo(n.Attributes["name"].Value, Convert.ToInt32(n.Attributes["projectnum"].Value,16), Convert.ToInt32(n.Attributes["projectpro"].Value, 16)));
+                    viewModeProject.ProjectBindList.Add(new ProjectInfo(n.Attributes["name"].Value, Convert.ToUInt16(n.Attributes["projectnum"].Value,16), Convert.ToUInt16(n.Attributes["projectpro"].Value, 16)));
                 }
             }
             catch (Exception ex)

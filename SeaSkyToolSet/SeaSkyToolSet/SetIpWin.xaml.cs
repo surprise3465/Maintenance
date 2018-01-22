@@ -11,7 +11,7 @@ namespace MaintenanceToolSet
     public partial class SetIpWin : Window
     {
         public string ipaddr = "";
-        int AdapterNum = 0;
+        int AdapterNum;
 
         public struct m_Adapter
         {
