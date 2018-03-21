@@ -151,7 +151,85 @@
                         <RowDefinition />
                         <RowDefinition Height="158" />
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="MaintGrid" />
+                    <DataGrid
+                        x:Name="MaintGrid"
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        SelectionUnit="CellOrRowHeader">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu Name="dgmenu" StaysOpen="true">
+                                <MenuItem Click="MaintGetAll_Click" Header="保存" />
+                                <MenuItem Header="修改" />
+                                <MenuItem Header="增行" />
+                                <MenuItem Header="删行" />
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="60" Header="Check">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn
+                                Width="60"
+                                Binding="{Binding deviceProject, Mode=TwoWay}"
+                                Header="Project" />
+                            <DataGridTextColumn
+                                Width="70"
+                                Binding="{Binding deviceName, Mode=TwoWay}"
+                                Header="Name" />
+                            <DataGridTextColumn
+                                Width="120"
+                                Binding="{Binding deviceIp, Mode=TwoWay}"
+                                Header="IpAddr" />
+                            <DataGridTextColumn
+                                Width="160"
+                                Binding="{Binding deviceMAC, Mode=TwoWay}"
+                                Header="MacAddr" />
+                            <DataGridTextColumn
+                                Width="120"
+                                Binding="{Binding deviceMask, Mode=TwoWay}"
+                                Header="Mask" />
+                            <DataGridTextColumn
+                                Width="70"
+                                Binding="{Binding deviceFpgaA, Mode=TwoWay}"
+                                Header="FPGA" />
+                            <DataGridTextColumn
+                                Width="60"
+                                Binding="{Binding deviceUboot, Mode=TwoWay}"
+                                Header="uBoot" />
+                            <DataGridTextColumn
+                                Width="60"
+                                Binding="{Binding deviceUimage, Mode=TwoWay}"
+                                Header="uImage" />
+                            <DataGridTextColumn
+                                Width="60"
+                                Binding="{Binding deviceFileSys, Mode=TwoWay}"
+                                Header="FileSys" />
+                            <DataGridTextColumn
+                                Width="70"
+                                Binding="{Binding deviceApp, Mode=TwoWay}"
+                                Header="AppVer" />
+                            <DataGridTextColumn
+                                Width="60"
+                                Binding="{Binding deviceHardVer, Mode=TwoWay}"
+                                Header="HardVer" />
+                            <DataGridTextColumn
+                                Width="70"
+                                Binding="{Binding deviceSys_MP, Mode=TwoWay}"
+                                Header="Sys_MP" />
+                            <DataGridTextColumn
+                                Width="140"
+                                Binding="{Binding deviceSn, Mode=TwoWay}"
+                                Header="Sn" />
+                            <DataGridTextColumn
+                                Width="80"
+                                Binding="{Binding deviceOtherInf, Mode=TwoWay}"
+                                Header="OtherInf" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                     <Canvas
                         Grid.Row="1"
                         Height="158"
@@ -187,8 +265,8 @@
                             Width="110"
                             HorizontalContentAlignment="Right"
                             Content="System Version" />
-                        <RichTextBox
-                            x:Name="richTextBoxSysver"
+                        <TextBox
+                            x:Name="textBoxSysver"
                             Canvas.Left="136"
                             Canvas.Top="112"
                             Width="250"

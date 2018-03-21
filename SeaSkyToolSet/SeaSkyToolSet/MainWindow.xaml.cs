@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Threading;
 using System.Xml;
@@ -14,72 +12,20 @@ namespace MaintenanceToolSet
     /// </summary>
     public partial class MainWindow : Window
     {
-        ExcelEdit systemtable = new ExcelEdit();
-        SSADevManage devmanage = new SSADevManage();
         private string path = AppDomain.CurrentDomain.BaseDirectory;
+        ExcelEdit systemtable = new ExcelEdit();
+        SSADevManager devmanager = new SSADevManager();
         
-        public ViewModeProject viewModeProject = new ViewModeProject();
-
-        public class ViewModeProject: INotifyPropertyChanged
-        {
-            private ObservableCollection<ProjectInfo> ProjectInfoList = new ObservableCollection<ProjectInfo>();
-            public ProjectInfo CurrentProjectInfo = new ProjectInfo("All", 0x00, 0x11b);
-
-            public ProjectInfo CurrentProjectBinding
-            {
-                get { return CurrentProjectInfo; }
-                set
-                {
-                    if (CurrentProjectInfo != value)
-                    {
-                        CurrentProjectInfo = value;
-                        OnPropertyChanged("CurrentProjectBinding");
-                    }
-                }
-            }
-
-            public ObservableCollection<ProjectInfo> ProjectBindList
-            {
-                get{return ProjectInfoList;}
-                set
-                {
-                    if (ProjectInfoList != value)
-                    {
-                        ProjectInfoList = value;
-                        OnPropertyChanged("ProjectBindList");
-                    }
-                }
-            }
-
-            public event PropertyChangedEventHandler PropertyChanged;
-            private void OnPropertyChanged(string propertyName)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        
+        public ViewModeProject viewMode =new ViewModeProject();
         private string ipaddr_string = "";
         private DispatcherTimer timer1 = new DispatcherTimer();
 
-        public class ProjectInfo 
-        {           
-            public string ProjectName { get; set; }
-            public ushort ProjectNum { get; set; }
-            public ushort Projectpro { get; set; }
-
-            public ProjectInfo(string projectName, ushort projectNum, ushort projectpro)
-            {
-                ProjectName = projectName;
-                ProjectNum = projectNum;
-                Projectpro = projectpro;
-            }
-        }
-        
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = viewMode;
 
-            ProjectSelCom.DataContext = viewModeProject;
+            MaintGrid.ItemsSource = viewMode.DeviceInforBindList;
 
             SetIpWin window = new SetIpWin();
             if (window.ShowDialog() == true)
@@ -92,7 +38,8 @@ namespace MaintenanceToolSet
             }
             textBoxProject.Text = path + "Project_PIS_Config.xml";
             LoadProjectXmlFile(textBoxProject.Text);
-            devmanage.SSADevDllInit(0x101, viewModeProject.CurrentProjectInfo.Projectpro, viewModeProject.CurrentProjectInfo.ProjectNum, 0x101,ipaddr_string);
+            devmanager.SSADevDllInit(0x101, viewMode.CurrentProjectBinding.Projectpro,
+                viewMode.CurrentProjectBinding.ProjectNum, 0x101,ipaddr_string);
             SetStatusBarclock();
         }
 
@@ -141,11 +88,11 @@ namespace MaintenanceToolSet
             {
                 XmlDocument doc = new XmlDocument();
                 doc.Load(fileName);
-                viewModeProject.ProjectBindList.Clear();
+                viewMode.ProjectBindList.Clear();
                 XmlNodeList list = doc.SelectNodes("/ProjectInf/Item");
                 foreach (XmlNode n in list)
                 {
-                    viewModeProject.ProjectBindList.Add(new ProjectInfo(n.Attributes["name"].Value, Convert.ToUInt16(n.Attributes["projectnum"].Value,16), Convert.ToUInt16(n.Attributes["projectpro"].Value, 16)));
+                    viewMode.ProjectBindList.Add(new ProjectInfo(n.Attributes["name"].Value, Convert.ToUInt16(n.Attributes["projectnum"].Value,16), Convert.ToUInt16(n.Attributes["projectpro"].Value, 16)));
                 }
             }
             catch (Exception ex)
