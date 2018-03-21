@@ -61,13 +61,17 @@
                 Click="Button_Click"
                 Content="_OK" />
         </Canvas>
-        <StackPanel Grid.Row="1" Grid.RowSpan="2">
+        <StackPanel
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Height="142"
+            VerticalAlignment="Bottom">
             <Label
                 Height="55"
                 Margin="0,0,111,0"
                 Padding="20,5,0,0"
                 VerticalAlignment="Top"
-                Content="Maintenance Interface developed by Sunjian&#xA;Update Interface developed by Sunjian"
+                Content="Maintenance Interface developed by S.J&#xA;Update Interface developed by S.J"
                 FontWeight="Bold"
                 Foreground="#FF8B6F6F" />
             <TextBlock
