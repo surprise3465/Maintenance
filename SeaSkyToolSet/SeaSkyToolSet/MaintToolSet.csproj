@@ -85,6 +85,7 @@
     <Compile Include="About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FtpClass.cs" />
     <Compile Include="SSADevManage.cs" />
     <Compile Include="Update.cs" />
     <Compile Include="Maintenance.cs" />
