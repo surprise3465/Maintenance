@@ -13,18 +13,22 @@ namespace MaintenanceToolSet
     public partial class MainWindow : Window
     {
         private string path = AppDomain.CurrentDomain.BaseDirectory;
+
         ExcelEdit systemtable = new ExcelEdit();
+
         SSADevManager devmanager = new SSADevManager();
         
         public ViewModeProject viewMode =new ViewModeProject();
+
         private string ipaddr_string = "";
-        private DispatcherTimer timer1 = new DispatcherTimer();
+
+        private DispatcherTimer timer1 = new DispatcherTimer();        
 
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = viewMode;
 
+            DataContext = viewMode;
             MaintGrid.ItemsSource = viewMode.DeviceInforBindList;
 
             SetIpWin window = new SetIpWin();
@@ -36,6 +40,7 @@ namespace MaintenanceToolSet
             {
                 Close();
             }
+
             textBoxProject.Text = path + "Project_PIS_Config.xml";
             LoadProjectXmlFile(textBoxProject.Text);
             devmanager.SSADevDllInit(0x101, viewMode.CurrentProjectBinding.Projectpro,

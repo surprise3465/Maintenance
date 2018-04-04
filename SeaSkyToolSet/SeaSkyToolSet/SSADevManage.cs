@@ -481,6 +481,7 @@ namespace MaintenanceToolSet
             CDevMsgParser RecvExtractor = new CDevMsgParser();
             DevUmsgParser SendUmsgcommand = new DevUmsgParser();
             DevUmsgParser RecvUmsgcommand = new DevUmsgParser();
+
             DevInformation m_DevInformation = new DevInformation();
             DevUpdate m_Update = new DevUpdate();
 

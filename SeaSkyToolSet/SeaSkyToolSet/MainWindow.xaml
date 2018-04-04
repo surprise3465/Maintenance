@@ -11,8 +11,51 @@
     BorderBrush="Black"
     BorderThickness="1"
     Icon="DLSSA.ico"
+    WindowStartupLocation="CenterScreen"
     WindowStyle="ThreeDBorderWindow"
     mc:Ignorable="d">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="LinearGradientBlueBackground" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Offset="0" Color="#FF377FED" />
+            <GradientStop Offset="1" Color="#FF074CC0" />
+        </LinearGradientBrush>
+
+        <SolidColorBrush x:Key="MyBtnBorderColor" Color="#FF2D78F4" />
+        <SolidColorBrush x:Key="MyBtnHoverBackgroundColor" Color="#FF317EF3" />
+        <Style x:Key="MyWpfButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="{StaticResource LinearGradientBlueBackground}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="{StaticResource MyBtnBorderColor}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3,3,3,3"
+                            SnapsToDevicePixels="true">
+                            <ContentPresenter
+                                x:Name="contentPresenter"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Focusable="False"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource MyBtnHoverBackgroundColor}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
@@ -79,11 +122,13 @@
                 <ComboBox
                     x:Name="ProjectSelCom"
                     Canvas.Left="100"
-                    Canvas.Top="2"
+                    Canvas.Top="3"
                     Width="100"
-                    Height="26"
+                    Height="24"
                     HorizontalContentAlignment="Left"
+                    Background="White"
                     DisplayMemberPath="ProjectName"
+                    FontWeight="Bold"
                     ItemsSource="{Binding Path=ProjectBindList, Mode=TwoWay}"
                     SelectedIndex="0"
                     SelectedItem="{Binding Path=CurrentProjectBinding, Mode=TwoWay}" />
@@ -100,10 +145,17 @@
                 <ComboBox
                     x:Name="DeviceSelCom"
                     Canvas.Left="310"
-                    Canvas.Top="2"
+                    Canvas.Top="3"
                     Width="100"
-                    Height="26"
-                    HorizontalContentAlignment="Left" />
+                    Height="24"
+                    HorizontalContentAlignment="Left"
+                    Background="White"
+                    DisplayMemberPath="Key"
+                    FontWeight="Bold"
+                    ItemsSource="{Binding Path=DevNumDictionBindList}"
+                    SelectedIndex="0"
+                    SelectedItem="{Binding Path=CurrentDeviceBinding, Mode=TwoWay}"
+                    SelectionChanged="DeviceSelCom_SelectionChanged" />
                 <Label
                     x:Name="label2"
                     Canvas.Left="420"
@@ -117,20 +169,21 @@
                     x:Name="textBoxProject"
                     Canvas.Left="515"
                     Canvas.Top="2"
-                    Width="400"
+                    Width="300"
                     Height="26"
                     HorizontalContentAlignment="Left"
                     BorderBrush="Black"
                     BorderThickness="1" />
                 <Button
                     x:Name="browsebutton"
-                    Canvas.Left="920"
+                    Canvas.Left="820"
                     Canvas.Top="2"
                     Width="65"
                     Height="26"
                     Click="browsebutton_Click"
                     Content="Browse"
-                    FontWeight="Bold" />
+                    FontWeight="Bold"
+                    Style="{StaticResource ResourceKey=MyWpfButton}" />
             </Canvas>
         </ToolBar>
         <TabControl
@@ -154,8 +207,16 @@
                     <DataGrid
                         x:Name="MaintGrid"
                         AutoGenerateColumns="False"
+                        Background="White"
                         CanUserAddRows="False"
                         SelectionUnit="CellOrRowHeader">
+
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+
                         <DataGrid.ContextMenu>
                             <ContextMenu Name="dgmenu" StaysOpen="true">
                                 <MenuItem Click="MaintGetAll_Click" Header="保存" />
@@ -165,13 +226,6 @@
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Width="60" Header="Check">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <CheckBox />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
                             <DataGridTextColumn
                                 Width="60"
                                 Binding="{Binding deviceProject, Mode=TwoWay}"
@@ -181,15 +235,15 @@
                                 Binding="{Binding deviceName, Mode=TwoWay}"
                                 Header="Name" />
                             <DataGridTextColumn
-                                Width="120"
+                                Width="110"
                                 Binding="{Binding deviceIp, Mode=TwoWay}"
                                 Header="IpAddr" />
                             <DataGridTextColumn
-                                Width="160"
+                                Width="130"
                                 Binding="{Binding deviceMAC, Mode=TwoWay}"
                                 Header="MacAddr" />
                             <DataGridTextColumn
-                                Width="120"
+                                Width="110"
                                 Binding="{Binding deviceMask, Mode=TwoWay}"
                                 Header="Mask" />
                             <DataGridTextColumn
@@ -221,7 +275,7 @@
                                 Binding="{Binding deviceSys_MP, Mode=TwoWay}"
                                 Header="Sys_MP" />
                             <DataGridTextColumn
-                                Width="140"
+                                Width="180"
                                 Binding="{Binding deviceSn, Mode=TwoWay}"
                                 Header="Sn" />
                             <DataGridTextColumn
@@ -233,61 +287,78 @@
                     <Canvas
                         Grid.Row="1"
                         Height="158"
-                        VerticalAlignment="Bottom">
+                        VerticalAlignment="Bottom"
+                        Background="White">
                         <Button
                             x:Name="MaintGetAll"
-                            Canvas.Left="136"
-                            Canvas.Top="10"
+                            Canvas.Left="36"
+                            Canvas.Top="26"
                             Width="110"
                             Height="34"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
+                            Background="#FF5EAEFF"
+                            BorderBrush="White"
                             Click="MaintGetAll_Click"
-                            Content="Get All Device" />
+                            Content="Get All Device"
+                            Foreground="White" />
                         <Button
                             x:Name="DevCount"
-                            Canvas.Left="286"
-                            Canvas.Top="10"
+                            Canvas.Left="186"
+                            Canvas.Top="26"
                             Width="100"
                             Height="34"
-                            Content="Dev Count" />
+                            Background="#FF5EAEFF"
+                            BorderBrush="White"
+                            Click="DevCount_Click"
+                            Content="Dev Count"
+                            Foreground="White" />
                         <Button
                             x:Name="ExportFile"
-                            Canvas.Left="136"
-                            Canvas.Top="60"
+                            Canvas.Left="326"
+                            Canvas.Top="26"
                             Width="110"
                             Height="34"
-                            Content="Export File" />
+                            Background="#FF5EAEFF"
+                            BorderBrush="White"
+                            Content="Export File"
+                            Foreground="White" />
                         <Label
                             x:Name="label3"
-                            Canvas.Left="21"
-                            Canvas.Top="112"
+                            Canvas.Left="26"
+                            Canvas.Top="89"
                             Width="110"
                             HorizontalContentAlignment="Right"
                             Content="System Version" />
                         <TextBox
                             x:Name="textBoxSysver"
-                            Canvas.Left="136"
-                            Canvas.Top="112"
+                            Canvas.Left="141"
+                            Canvas.Top="89"
                             Width="250"
                             Height="28"
                             BorderBrush="Black" />
                         <Button
                             x:Name="buttonSysver"
-                            Canvas.Left="406"
-                            Canvas.Top="112"
+                            Canvas.Left="411"
+                            Canvas.Top="86"
                             Width="75"
-                            Height="26"
+                            Height="32"
+                            Background="#FF5EAEFF"
+                            BorderBrush="White"
                             Click="buttonSysver_Click"
-                            Content="Browse" />
+                            Content="Browse"
+                            Foreground="White" />
                         <Button
                             x:Name="buttonCompare"
-                            Canvas.Left="501"
-                            Canvas.Top="112"
+                            Canvas.Left="506"
+                            Canvas.Top="86"
                             Width="75"
-                            Height="26"
+                            Height="32"
+                            Background="#FF5EAEFF"
+                            BorderBrush="White"
                             Click="buttonCompare_Click"
-                            Content="Compare" />
+                            Content="Compare"
+                            Foreground="White" />
                     </Canvas>
                 </Grid>
             </TabItem>
@@ -302,13 +373,12 @@
                 </TabItem.Background>
                 <DataGrid x:Name="UpdateGrid" Margin="0,0,0,269" />
             </TabItem>
-            <Button
-                x:Name="button"
-                Width="75"
-                Height="100"
-                Content="Button" />
         </TabControl>
-        <StatusBar x:Name="statusBar" Grid.Row="3">
+        <StatusBar
+            x:Name="statusBar"
+            Grid.Row="3"
+            Background="#FF5EAEFF"
+            Foreground="White">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>

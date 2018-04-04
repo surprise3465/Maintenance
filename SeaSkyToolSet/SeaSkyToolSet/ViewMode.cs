@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace MaintenanceToolSet
@@ -36,6 +38,7 @@ namespace MaintenanceToolSet
             public string deviceSys_MP { get; set; }
             public string deviceSn { get; set; }
             public string deviceOtherInf { get; set; }
+            public string deviceShortName { get; set; }
 
             public DeviceInformation(string devProject, string devName, string devIp, string devMac, string devMask, string devFpgaA,
                 string devUboot, string devUimage, string devFileSys, string devApp, string devHardVer, string devSys_MP, string devSn, string devOtherInf)
@@ -54,6 +57,7 @@ namespace MaintenanceToolSet
                 deviceSys_MP = devSys_MP;
                 deviceSn = devSn;
                 deviceOtherInf = devOtherInf;
+                deviceShortName = Regex.Replace(deviceName, @"\([^\(]*\)", "");
             }
         }
 
@@ -62,7 +66,9 @@ namespace MaintenanceToolSet
             private ObservableCollection<ProjectInfo> ProjectInfoList = new ObservableCollection<ProjectInfo>();
             private ProjectInfo CurrentProjectInfo = new ProjectInfo("All", 0x00, 0x11b);
             private ObservableCollection<DeviceInformation> DevInforList = new ObservableCollection<DeviceInformation>();
-            
+            private Dictionary<string, int> DevNumDiction = new Dictionary<string, int>();
+            private string CurrentDiction;
+
             public ProjectInfo CurrentProjectBinding
             {
                 get { return CurrentProjectInfo; }
@@ -98,6 +104,32 @@ namespace MaintenanceToolSet
                     {
                         DevInforList = value;
                         OnPropertyChanged("DeviceInforBindList");
+                    }
+                }
+            }
+
+            public Dictionary<string, int> DevNumDictionBindList
+            {
+                get { return DevNumDiction; }
+                set
+                {
+                    if (DevNumDiction != value)
+                    {
+                        DevNumDiction = value;
+                        OnPropertyChanged("DevNumDictionBindList");
+                    }
+                }
+            }
+
+            public string CurrentDeviceBinding
+            {
+                get { return CurrentDiction; }
+                set
+                {
+                    if (CurrentDiction != value)
+                    {
+                        CurrentDiction = value;
+                        OnPropertyChanged("CurrentDeviceBinding");
                     }
                 }
             }

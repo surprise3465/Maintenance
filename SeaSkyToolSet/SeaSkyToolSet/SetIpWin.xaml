@@ -9,6 +9,7 @@
     Height="210"
     Icon="res/DLSSA.ico"
     ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
     <Window.Resources>
@@ -32,7 +33,11 @@
         AutoGenerateColumns="False"
         Background="#FFF9F7F7"
         BorderBrush="#FF688CAF">
-
+        <DataGrid.ColumnHeaderStyle>
+            <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+            </Style>
+        </DataGrid.ColumnHeaderStyle>
         <DataGrid.Columns>
 
             <DataGridTemplateColumn Header="Select">

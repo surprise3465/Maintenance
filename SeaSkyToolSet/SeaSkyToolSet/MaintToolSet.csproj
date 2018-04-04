@@ -85,6 +85,9 @@
     <Compile Include="About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DeviceCount.xaml.cs">
+      <DependentUpon>DeviceCount.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FtpClass.cs" />
     <Compile Include="SSADevManage.cs" />
     <Compile Include="Update.cs" />
@@ -94,6 +97,10 @@
     </Compile>
     <Compile Include="ViewMode.cs" />
     <Page Include="About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeviceCount.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

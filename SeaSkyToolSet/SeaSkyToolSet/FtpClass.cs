@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MaintenanceToolSet
 {
@@ -41,7 +38,7 @@ namespace MaintenanceToolSet
             string uri = ftpURI + fileInf.Name;
             FtpWebRequest reqFTP;
 
-            reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(uri));
+            reqFTP = (FtpWebRequest)WebRequest.Create(new Uri(uri));
             reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
             reqFTP.KeepAlive = false;
             reqFTP.Method = WebRequestMethods.Ftp.UploadFile;
@@ -78,7 +75,7 @@ namespace MaintenanceToolSet
             string uri = ftpuri;
             FtpWebRequest reqFTP;
 
-            reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(uri));
+            reqFTP = (FtpWebRequest)WebRequest.Create(new Uri(uri));
             reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
             reqFTP.KeepAlive = false;
             reqFTP.Method = WebRequestMethods.Ftp.UploadFile;
@@ -117,7 +114,7 @@ namespace MaintenanceToolSet
             {
                 FileStream outputStream = new FileStream(filePath + "\\" + fileName, FileMode.Create);
 
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(ftpUri));
+                reqFTP = (FtpWebRequest)WebRequest.Create(new Uri(ftpUri));
                 reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
                 reqFTP.UseBinary = true;
                 reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
@@ -156,7 +153,7 @@ namespace MaintenanceToolSet
             {
                 string uri = fileName;
                 FtpWebRequest reqFTP;
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(uri));
+                reqFTP = (FtpWebRequest)WebRequest.Create(new Uri(uri));
 
                 reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
                 reqFTP.KeepAlive = false;
@@ -188,7 +185,7 @@ namespace MaintenanceToolSet
             {
                 string uri = ftpURI + folderName;
                 FtpWebRequest reqFTP;
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(uri));
+                reqFTP = (FtpWebRequest)WebRequest.Create(new Uri(uri));
 
                 reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
                 reqFTP.KeepAlive = false;
@@ -221,7 +218,7 @@ namespace MaintenanceToolSet
             {
                 StringBuilder result = new StringBuilder();
                 FtpWebRequest ftp;
-                ftp = (FtpWebRequest)FtpWebRequest.Create(new Uri(ftpURI));
+                ftp = (FtpWebRequest)WebRequest.Create(new Uri(ftpURI));
                 ftp.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
                 ftp.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
                 WebResponse response = ftp.GetResponse();
@@ -257,7 +254,7 @@ namespace MaintenanceToolSet
             FtpWebRequest reqFTP;
             try
             {
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(ftpURI));
+                reqFTP = (FtpWebRequest)WebRequest.Create(new Uri(ftpURI));
                 reqFTP.UseBinary = true;
                 reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
                 reqFTP.Method = WebRequestMethods.Ftp.ListDirectory;
@@ -380,7 +377,7 @@ namespace MaintenanceToolSet
             try
             {
                 // dirName = name of the directory to create.
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(ftpURI + dirName));
+                reqFTP = (FtpWebRequest)WebRequest.Create(new Uri(ftpURI + dirName));
                 reqFTP.Method = WebRequestMethods.Ftp.MakeDirectory;
                 reqFTP.UseBinary = true;
                 reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
@@ -407,7 +404,7 @@ namespace MaintenanceToolSet
             long fileSize = 0;
             try
             {
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(ftpURI + filename));
+                reqFTP = (FtpWebRequest)WebRequest.Create(new Uri(ftpURI + filename));
                 reqFTP.Method = WebRequestMethods.Ftp.GetFileSize;
                 reqFTP.UseBinary = true;
                 reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
@@ -435,7 +432,7 @@ namespace MaintenanceToolSet
             FtpWebRequest reqFTP;
             try
             {
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(ftpURI + currentFilename));
+                reqFTP = (FtpWebRequest)WebRequest.Create(new Uri(ftpURI + currentFilename));
                 reqFTP.Method = WebRequestMethods.Ftp.Rename;
                 reqFTP.RenameTo = newFilename;
                 reqFTP.UseBinary = true;

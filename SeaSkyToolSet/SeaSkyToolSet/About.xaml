@@ -9,7 +9,7 @@
     Height="270"
     Icon="DLSSA.ico"
     ResizeMode="NoResize"
-    mc:Ignorable="d">
+    mc:Ignorable="d" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,2,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="58" />
@@ -73,7 +73,7 @@
                 VerticalAlignment="Top"
                 Content="Maintenance Interface developed by S.J&#xA;Update Interface developed by S.J"
                 FontWeight="Bold"
-                Foreground="#FF8B6F6F" />
+                Foreground="#FF8B6F6F" VerticalContentAlignment="Center" />
             <TextBlock
                 Width="426"
                 Height="50"
