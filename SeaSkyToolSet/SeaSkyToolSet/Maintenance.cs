@@ -2,10 +2,11 @@
 using System.Windows;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using Microsoft.Win32;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TheExcelEdit;
+using System.Windows.Controls;
 
 namespace MaintenanceToolSet
 {
@@ -103,6 +104,37 @@ namespace MaintenanceToolSet
             }
 
             MaintGrid.ItemsSource = DevTempList;
+        }
+
+        private void ExportFile_Click(object sender, RoutedEventArgs e)
+        {
+            ExcelEdit exportExcel = new ExcelEdit();
+            exportExcel.Create();
+            string name = exportExcel.GetSheetName(1);
+            rowStart = 1;
+            colStart = 1;
+            rowEnd = MaintGrid.Items.Count + 1;
+            colEnd = MaintGrid.Columns.Count;
+            exportExcel.SetNumberFormat(name,rowStart,colStart,rowEnd,colEnd, "@");
+            for (int i = 0; i < MaintGrid.Columns.Count; i++)
+            {
+                exportExcel.SetCellValue(name, 1, i+1, MaintGrid.Columns[i].Header);
+                for (int j = 0; j < MaintGrid.Items.Count; j++)
+                {
+                    exportExcel.SetCellValue(name, j+2, i+1, ((TextBlock) MaintGrid.Columns[i].GetCellContent(MaintGrid.Items[j]))?.Text);
+                }
+            }
+            
+            SaveFileDialog saveDlg = new SaveFileDialog();
+            saveDlg.Filter = "xlsx|*.xlsx|xls|*.xls|All|*.*";
+            saveDlg.FileName = DateTime.Now.ToString();
+            var result = saveDlg.ShowDialog();
+            if (result == true)
+            {
+                MessageBox.Show(exportExcel.SaveAs(saveDlg.FileName) ? "保存成功" : "保存失败");
+            }
+
+            exportExcel.Close();
         }
     }
 }
