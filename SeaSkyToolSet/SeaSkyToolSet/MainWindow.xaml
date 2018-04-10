@@ -321,6 +321,7 @@
                             Height="34"
                             Background="#FF5EAEFF"
                             BorderBrush="White"
+                            Click="ExportFile_Click"
                             Content="Export File"
                             Foreground="White" />
                         <Label
