@@ -159,7 +159,7 @@ namespace MaintenanceToolSet
                 reqFTP.KeepAlive = false;
                 reqFTP.Method = WebRequestMethods.Ftp.DeleteFile;
 
-                string result = String.Empty;
+                string result = string.Empty;
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
                 long size = response.ContentLength;
                 Stream datastream = response.GetResponseStream();
@@ -191,7 +191,7 @@ namespace MaintenanceToolSet
                 reqFTP.KeepAlive = false;
                 reqFTP.Method = WebRequestMethods.Ftp.RemoveDirectory;
 
-                string result = String.Empty;
+                string result = string.Empty;
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
                 long size = response.ContentLength;
                 Stream datastream = response.GetResponseStream();

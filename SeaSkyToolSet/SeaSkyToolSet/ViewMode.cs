@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
@@ -22,6 +23,7 @@ namespace MaintenanceToolSet
             }
         }
 
+        [Serializable]
         public class DeviceInformation
         {
             public string deviceProject { get; set; }
@@ -39,6 +41,11 @@ namespace MaintenanceToolSet
             public string deviceSn { get; set; }
             public string deviceOtherInf { get; set; }
             public string deviceShortName { get; set; }
+
+            public DeviceInformation()
+            {
+                
+            }
 
             public DeviceInformation(string devProject, string devName, string devIp, string devMac, string devMask, string devFpgaA,
                 string devUboot, string devUimage, string devFileSys, string devApp, string devHardVer, string devSys_MP, string devSn, string devOtherInf)

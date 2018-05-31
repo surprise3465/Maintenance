@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Reflection;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 using System.Xml;
 using Microsoft.Win32;
 using TheExcelEdit;
+using Vlc.DotNet.Wpf;
 
 namespace MaintenanceToolSet
 {
@@ -22,11 +27,21 @@ namespace MaintenanceToolSet
 
         private string ipaddr_string = "";
 
-        private DispatcherTimer timer1 = new DispatcherTimer();        
+        private DispatcherTimer clocktimer = new DispatcherTimer();
+        private DispatcherTimer videotimer = new DispatcherTimer();
+
+        private readonly DirectoryInfo vlcLibDirectory;
+        private VlcControl vlcControl;
+
+        public ObservableCollection<DeviceInformation> DevTempList = new ObservableCollection<DeviceInformation>();
 
         public MainWindow()
         {
             InitializeComponent();
+            var currentAssembly = Assembly.GetEntryAssembly();
+            var currentDirectory = new FileInfo(currentAssembly.Location).DirectoryName;
+            // Default installation path of VideoLAN.LibVLC.Windows
+            vlcLibDirectory = new DirectoryInfo(Path.Combine(currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
 
             DataContext = viewMode;
             MaintGrid.ItemsSource = viewMode.DeviceInforBindList;
@@ -50,9 +65,9 @@ namespace MaintenanceToolSet
 
         private void SetStatusBarclock()
         {
-            timer1.Interval = TimeSpan.FromSeconds(1);
-            timer1.Tick += StatusTimerTick;
-            timer1.Start();
+            clocktimer.Interval = TimeSpan.FromSeconds(1);
+            clocktimer.Tick += StatusTimerTick;
+            clocktimer.Start();
         }
 
         private void StatusTimerTick(object sender, EventArgs e)
@@ -110,6 +125,129 @@ namespace MaintenanceToolSet
         {
             About about = new About();
             about.ShowDialog();
+        }
+
+        private void palyfileBtn_Click(object sender, RoutedEventArgs e)
+        {
+            vlcControl?.Dispose();
+            vlcControl = new VlcControl();
+            ControlContainer.Content = vlcControl;
+            vlcControl.SourceProvider.CreatePlayer(vlcLibDirectory);
+            //vlcControl.SourceProvider.MediaPlayer.Play(new Uri("http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_stereo.avi"));
+            FileInfo fileInfo = new FileInfo(@"E:\2.avi");
+            vlcControl.SourceProvider.MediaPlayer.Play(fileInfo);
+            Videostatusclock();           
+        }
+
+        private void stopPlayBtn_Click(object sender, RoutedEventArgs e)
+        {
+            vlcControl?.Dispose();
+            vlcControl = null;
+            videotimer.Stop();
+        }
+
+        private void pauseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            vlcControl.SourceProvider.MediaPlayer.Pause();
+        }
+
+        private void backBtn_Click(object sender, RoutedEventArgs e)
+        {
+            vlcControl.SourceProvider.MediaPlayer.Rate *= (float)0.5;
+        }
+
+        private void forwardBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (vlcControl == null)
+            {
+                return;
+            }
+
+            vlcControl.SourceProvider.MediaPlayer.Rate *= 2;
+        }
+
+        private void addURLBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string mrl = fileNametextBox.Text;
+        }
+
+        private void openfileBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Videostatusclock()
+        {
+            videotimer.Interval = TimeSpan.FromSeconds(1);
+            videotimer.Tick += VideoTimerTick;
+            videotimer.Start();
+        }
+
+        public static string formatLongToTimeStr(long l)
+        {
+            int hour = 0;
+            int minute = 0;
+            int second = 0;
+
+            second = (int)l/1000;
+
+            if (second>60)
+            {
+                minute = second / 60;
+                second = second % 60;
+            }
+            if (minute > 60)
+            {
+                hour = minute / 60;
+                minute = minute % 60;
+            }
+            return $"{hour:00}:{minute:00}:{second:00}";
+        }
+
+        private void VideoTimerTick(object sender, EventArgs e)
+        {
+            if (vlcControl == null)
+            {
+                return;
+            }
+           
+            if (vlcControl.SourceProvider.MediaPlayer.Length != 0)
+            {
+                currentTime.Content = formatLongToTimeStr(vlcControl.SourceProvider.MediaPlayer.Time);
+                totalLength.Content = formatLongToTimeStr(vlcControl.SourceProvider.MediaPlayer.Length);
+                sliderVideo.Maximum = vlcControl.SourceProvider.MediaPlayer.Length;
+                sliderVideo.Value = vlcControl.SourceProvider.MediaPlayer.Time;
+                sliderVolume.Value = vlcControl.SourceProvider.MediaPlayer.Audio.Volume;
+            }
+            
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            vlcControl?.Dispose();
+            vlcControl = null;
+            clocktimer.Stop();
+            videotimer.Stop();
+        }
+
+        private void sliderVideo_Drag(object sender, DragCompletedEventArgs dragCompletedEventArgs)
+        {
+            if (vlcControl == null)
+            {
+                return;
+            }
+
+            vlcControl.SourceProvider.MediaPlayer.Time = (long)sliderVideo.Value;
+        }
+
+        private void sliderVolume_Drag(object sender, DragCompletedEventArgs dragCompletedEventArgs)
+        {
+            if (vlcControl == null)
+            {
+                return;
+            }
+
+            vlcControl.SourceProvider.MediaPlayer.Audio.Volume =(int)sliderVolume.Value;
         }
     }
 }
