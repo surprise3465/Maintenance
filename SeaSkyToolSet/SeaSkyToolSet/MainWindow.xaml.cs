@@ -58,8 +58,8 @@ namespace MaintenanceToolSet
 
             textBoxProject.Text = path + "Project_PIS_Config.xml";
             LoadProjectXmlFile(textBoxProject.Text);
-            devmanager.SSADevDllInit(0x101, viewMode.CurrentProjectBinding.Projectpro,
-                viewMode.CurrentProjectBinding.ProjectNum, 0x101,ipaddr_string);
+            //devmanager.SSADevDllInit(0x101, viewMode.CurrentProjectBinding.Projectpro,
+            //    viewMode.CurrentProjectBinding.ProjectNum, 0x101,ipaddr_string);
             SetStatusBarclock();
         }
 

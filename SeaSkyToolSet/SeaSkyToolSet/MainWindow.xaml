@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
     Title="SSA Maintenance Tool"
-    Width="1280"
+    Width="1325"
     Height="720"
     BorderBrush="Black"
     BorderThickness="1"
@@ -410,9 +410,8 @@
                             x:Name="groupBox1"
                             Width="463"
                             Height="158"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top">
-                            <GroupBox.Header>Maitenance</GroupBox.Header>
+                            HorizontalAlignment="Left">
+                            <GroupBox.Header>Maintenance</GroupBox.Header>
                             <Canvas>
                                 <Button
                                     x:Name="ExportFile"
@@ -504,7 +503,7 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Text="Update" />
+                            Text="FPGAUpdate" />
                     </StackPanel>
                 </TabItem.Header>
                 <Grid>
