@@ -58,8 +58,9 @@ namespace MaintenanceToolSet
 
             textBoxProject.Text = path + "Project_PIS_Config.xml";
             LoadProjectXmlFile(textBoxProject.Text);
-            devmanager.SSADevDllInit(0x101, viewMode.CurrentProjectBinding.Projectpro,
-                viewMode.CurrentProjectBinding.ProjectNum, 0x101,ipaddr_string);
+            FpgaUpdate1.localIPAddr = ipaddr_string;
+            //devmanager.SSADevDllInit(0x101, viewMode.CurrentProjectBinding.Projectpro,
+            //    viewMode.CurrentProjectBinding.ProjectNum, 0x101,ipaddr_string);
             SetStatusBarclock();
         }
 
@@ -248,6 +249,26 @@ namespace MaintenanceToolSet
             }
 
             vlcControl.SourceProvider.MediaPlayer.Audio.Volume =(int)sliderVolume.Value;
+        }
+
+        private void sliderVideo_MouseLefButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (vlcControl == null)
+            {
+                return;
+            }
+
+            vlcControl.SourceProvider.MediaPlayer.Time = (long)sliderVideo.Value;
+        }
+
+        private void sliderVolume_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (vlcControl == null)
+            {
+                return;
+            }
+
+            vlcControl.SourceProvider.MediaPlayer.Audio.Volume = (int)sliderVolume.Value;
         }
     }
 }

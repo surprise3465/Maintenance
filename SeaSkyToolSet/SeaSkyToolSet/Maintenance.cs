@@ -174,5 +174,11 @@ namespace MaintenanceToolSet
                 stream.Close();
             }
         }
+
+        private void MaintClearBtn_Click(object sender, RoutedEventArgs e)
+        {
+            viewMode.DeviceInforBindList.Clear();
+            MaintGrid.ItemsSource = viewMode.DeviceInforBindList;
+        }
     }
 }

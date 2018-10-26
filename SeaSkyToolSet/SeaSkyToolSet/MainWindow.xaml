@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
     Title="SSA Maintenance Tool"
-    Width="1280"
+    Width="1325"
     Height="720"
     BorderBrush="Black"
     BorderThickness="1"
@@ -17,6 +17,109 @@
     WindowStyle="ThreeDBorderWindow"
     mc:Ignorable="d">
     <Window.Resources>
+
+        <LinearGradientBrush x:Key="SliderBackground" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#59ccfc" />
+            <GradientStop Offset="0.5" Color="#00b3fe" />
+            <GradientStop Offset="1" Color="#59ccfc" />
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="SliderThumb" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#FFD9D3E8" />
+            <!--<GradientStop Offset="1" Color="#dfdfdf"/>-->
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="SliderText" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#7cce45" />
+            <GradientStop Offset="1" Color="#4ea017" />
+        </LinearGradientBrush>
+
+        <!--  Slider模板  -->
+        <Style x:Key="Slider_RepeatButton" TargetType="RepeatButton">
+            <Setter Property="Focusable" Value="false" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border Background="{StaticResource SliderBackground}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Slider_RepeatButton1" TargetType="RepeatButton">
+            <Setter Property="Focusable" Value="false" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border Background="Transparent" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Slider_Thumb" TargetType="Thumb">
+            <Setter Property="Focusable" Value="false" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border Background="{StaticResource SliderBackground}" />
+                            <Border
+                                Grid.ColumnSpan="2"
+                                Width="15"
+                                Background="{StaticResource SliderThumb}"
+                                CornerRadius="4">
+                                <!--<TextBlock Text="||" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Slider_CustomStyle" TargetType="Slider">
+            <Setter Property="Focusable" Value="false" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Slider">
+                        <Grid>
+                            <!--<Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>-->
+                            <Grid.Effect>
+                                <DropShadowEffect BlurRadius="10" ShadowDepth="1" />
+                            </Grid.Effect>
+                            <!--<Border HorizontalAlignment="Right" BorderBrush="Gray" BorderThickness="1,1,0,1" Background="{StaticResource SliderText}" Width="80" CornerRadius="8,0,0,8"/>-->
+                            <!--<Border Grid.Column="2" HorizontalAlignment="Right" BorderBrush="Gray" BorderThickness="0,1,1,1" Background="{StaticResource SliderText}" Width="40" CornerRadius="0,8,8,0"/>-->
+                            <!--<TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Tag}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>-->
+                            <!--<TextBlock Grid.Column="2" Text="{Binding ElementName=PART_Track,Path=Value,StringFormat=\{0:N0\}}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" DataContext="{Binding}" />-->
+                            <Border
+                                Grid.Column="1"
+                                BorderBrush="Gray"
+                                BorderThickness="1"
+                                CornerRadius="8,0,0,8">
+                                <Track Name="PART_Track" Grid.Column="1">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource Slider_RepeatButton}" />
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource Slider_RepeatButton1}" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{StaticResource Slider_Thumb}" />
+                                    </Track.Thumb>
+                                </Track>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <LinearGradientBrush x:Key="LinearGradientBlueBackground" StartPoint="0.5,0" EndPoint="0.5,1">
             <GradientStop Offset="0" Color="#FF5EAEFF" />
             <GradientStop Offset="1" Color="#FF074CC0" />
@@ -24,7 +127,7 @@
 
         <SolidColorBrush x:Key="MyBtnBorderColor" Color="#FF074CC0" />
         <SolidColorBrush x:Key="MyBtnHoverBackgroundColor" Color="#FF5EAEFF" />
-        <Style x:Key="MyWpfButton" TargetType="{x:Type Button}">
+        <Style TargetType="Button">
             <Setter Property="Background" Value="{StaticResource LinearGradientBlueBackground}" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="BorderBrush" Value="{StaticResource MyBtnBorderColor}" />
@@ -185,8 +288,7 @@
                     Height="26"
                     Click="browsebutton_Click"
                     Content="Browse"
-                    FontWeight="Bold"
-                    Style="{StaticResource ResourceKey=MyWpfButton}" />
+                    FontWeight="Bold" />
             </Canvas>
         </ToolBar>
         <TabControl
@@ -219,6 +321,7 @@
                         AutoGenerateColumns="False"
                         Background="White"
                         CanUserAddRows="False"
+                        IsReadOnly="True"
                         SelectionUnit="FullRow">
 
                         <DataGrid.ColumnHeaderStyle>
@@ -371,8 +474,7 @@
                                     Width="100"
                                     Height="32"
                                     HorizontalAlignment="Left"
-                                    Content="UpLoad All"
-                                    Style="{StaticResource ResourceKey=MyWpfButton}" />
+                                    Content="UpLoad All" />
                                 <Button
                                     x:Name="browseProgButton"
                                     Canvas.Left="389"
@@ -380,8 +482,7 @@
                                     Width="100"
                                     Height="32"
                                     HorizontalAlignment="Left"
-                                    Content="Browse"
-                                    Style="{StaticResource ResourceKey=MyWpfButton}" />
+                                    Content="Browse" />
                                 <RadioButton
                                     x:Name="radfpga"
                                     Canvas.Left="23"
@@ -410,9 +511,8 @@
                             x:Name="groupBox1"
                             Width="463"
                             Height="158"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top">
-                            <GroupBox.Header>Maitenance</GroupBox.Header>
+                            HorizontalAlignment="Left">
+                            <GroupBox.Header>Maintenance</GroupBox.Header>
                             <Canvas>
                                 <Button
                                     x:Name="ExportFile"
@@ -424,8 +524,7 @@
                                     BorderBrush="White"
                                     Click="ExportFile_Click"
                                     Content="Export Excel File"
-                                    RenderTransformOrigin="-2.364,0.706"
-                                    Style="{StaticResource ResourceKey=MyWpfButton}" />
+                                    RenderTransformOrigin="-2.364,0.706" />
                                 <Button
                                     x:Name="DevCount"
                                     Canvas.Left="10"
@@ -436,8 +535,7 @@
                                     BorderBrush="White"
                                     Click="DevCount_Click"
                                     Content="Device statistics"
-                                    RenderTransformOrigin="-3.21,0.294"
-                                    Style="{StaticResource ResourceKey=MyWpfButton}" />
+                                    RenderTransformOrigin="-3.21,0.294" />
                                 <Label
                                     x:Name="label3"
                                     Canvas.Left="10"
@@ -463,8 +561,7 @@
                                     HorizontalAlignment="Left"
                                     BorderBrush="White"
                                     Click="buttonSysver_Click"
-                                    Content="Browse"
-                                    Style="{StaticResource ResourceKey=MyWpfButton}" />
+                                    Content="Browse" />
                                 <Button
                                     x:Name="buttonCompare"
                                     Canvas.Left="137"
@@ -474,22 +571,22 @@
                                     HorizontalAlignment="Left"
                                     BorderBrush="White"
                                     Click="buttonCompare_Click"
-                                    Content="Compare Version"
-                                    Style="{StaticResource ResourceKey=MyWpfButton}" />
+                                    Content="Compare Version" />
                             </Canvas>
                         </GroupBox>
                         <Button
                             x:Name="MaintGetAll"
-                            Width="150"
-                            Height="45"
-                            Margin="978,103,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
+                            Margin="1023,90,0,23"
                             BorderBrush="White"
                             Click="MaintGetAll_Click"
                             Content="Get All Devices"
-                            FontSize="14"
-                            Style="{StaticResource ResourceKey=MyWpfButton}" />
+                            FontSize="14" Width="150" Height="45" HorizontalAlignment="Left" />
+                        <Button
+                            x:Name="MaintClearBtn"
+                            Margin="1023,30,0,83"
+                            Click="MaintClearBtn_Click"
+                            Content="Clear All Devices"
+                            FontSize="14" Width="150" Height="45" HorizontalAlignment="Left" />
                     </Grid>
                 </Grid>
             </TabItem>
@@ -504,16 +601,11 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Text="Update" />
+                            Text="FPGAUpdate" />
                     </StackPanel>
                 </TabItem.Header>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="200" />
-                    </Grid.RowDefinitions>
-                    <Canvas Grid.Row="1" Background="White" />
-                </Grid>
+                <local:FpgaUpdate x:Name="FpgaUpdate1" />
+
             </TabItem>
             <TabItem
                 x:Name="tabVideo"
@@ -541,7 +633,10 @@
                         x:Name="sliderVideo"
                         Grid.Row="1"
                         Margin="60,0"
+                        IsMoveToPointEnabled="True"
                         Maximum="100"
+                        MouseLeftButtonUp="sliderVideo_MouseLefButtonUp"
+                        Style="{StaticResource Slider_CustomStyle}"
                         Thumb.DragCompleted="sliderVideo_Drag"
                         Value="0" />
                     <Canvas Grid.Row="2" Background="White">
@@ -590,7 +685,9 @@
                             Canvas.Left="561"
                             Canvas.Top="22"
                             Width="120"
+                            IsMoveToPointEnabled="True"
                             Maximum="100"
+                            MouseLeftButtonUp="sliderVolume_MouseLeftButtonUp"
                             Thumb.DragCompleted="sliderVolume_Drag" />
                         <Label
                             x:Name="label9"
@@ -612,20 +709,13 @@
                             Canvas.Top="60"
                             Width="458"
                             Height="32"
-                            Text="TextBox"
                             TextWrapping="Wrap" />
                         <RichTextBox
                             x:Name="fileListrichTextBox"
                             Canvas.Left="98"
                             Canvas.Top="110"
                             Width="458"
-                            Height="83">
-                            <FlowDocument>
-                                <Paragraph>
-                                    <Run Text="RichTextBox" />
-                                </Paragraph>
-                            </FlowDocument>
-                        </RichTextBox>
+                            Height="32" />
                         <Button
                             x:Name="addURLBtn"
                             Canvas.Left="6"
@@ -652,7 +742,6 @@
                         FontSize="9" />
                 </Grid>
             </TabItem>
-
         </TabControl>
         <StatusBar
             x:Name="statusBar"
