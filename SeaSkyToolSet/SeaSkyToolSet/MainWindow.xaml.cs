@@ -58,7 +58,10 @@ namespace MaintenanceToolSet
 
             textBoxProject.Text = path + "Project_PIS_Config.xml";
             LoadProjectXmlFile(textBoxProject.Text);
+<<<<<<< HEAD
             FpgaUpdate1.localIPAddr = ipaddr_string;
+=======
+>>>>>>> 75de24790ce485905e4b84a1a0899a508457c393
             //devmanager.SSADevDllInit(0x101, viewMode.CurrentProjectBinding.Projectpro,
             //    viewMode.CurrentProjectBinding.ProjectNum, 0x101,ipaddr_string);
             SetStatusBarclock();
